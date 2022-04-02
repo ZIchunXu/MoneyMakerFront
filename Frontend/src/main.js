@@ -2,11 +2,13 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import axios from "axios";
 import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/en'
 import DrVueEcharts from 'dr-vue-echarts';
+Vue.prototype.$axios = axios;
 Vue.use(DrVueEcharts)
 Vue.use(ElementUI, { locale })
 Vue.use(ElementUI);

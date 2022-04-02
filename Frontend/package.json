@@ -10,6 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.26.1",
     "dr-vue-echarts": "^1.0.14",
     "element-ui": "^2.15.6",
     "vue": "^2.5.2",
