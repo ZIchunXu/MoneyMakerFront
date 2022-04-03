@@ -1,69 +1,78 @@
 <template>
   <el-container>
-    <div class="parent">
-      <div class="div1">
+    <el-form
+      class="parent"
+      :model="portfolioForm"
+      :rules="rules"
+      ref="portfolioForm"
+    >
+      <el-form-item
+        class="div1"
+        prop="fromcurrency"
+      >
         <el-select
-          id="FromCurrency"
-          v-model="value"
-          placeholder=""
+          id="fromcurrencies"
+          v-model="portfolioForm.fromcurrency"
         >
           <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            v-for="item in fromcurrencies"
+            :key="item.currencySym"
+            :label="item.currencyFullName"
+            :value="item.currencySym"
           >
           </el-option>
         </el-select>
-      </div>
-      <div class="div2">
-        <el-input
-          v-model="input"
-          placeholder=""
-        ></el-input>
-      </div>
+      </el-form-item>
+      <el-form-item
+        class="div2"
+        prop="fromvalue"
+      >
+        <el-input v-model.number="portfolioForm.fromvalue"></el-input>
+      </el-form-item>
       <div class="div3"> </div>
       <div class="div4"> </div>
-      <div class="div5">
-        <el-button type="warning">Convert</el-button>
-      </div>
+      <el-button
+        class="div5"
+        type="warning"
+        @click="submitForm('portfolioForm')"
+      >Convert</el-button>
       <div class="div6"> </div>
       <div class="div7"> </div>
-      <div class="div8">
-        <el-input
-          v-model="input"
-          placeholder=""
-        ></el-input>
-      </div>
-      <div class="div9">
+      <el-form-item
+        class="div8"
+        prop="tovalue"
+      >
+        <el-input v-model.number="portfolioForm.tovalue"></el-input>
+      </el-form-item>
+      <el-form-item
+        class="div9"
+        prop="tocurrency"
+      >
         <el-select
-          id="FromCurrency"
-          v-model="value"
-          placeholder=""
+          id="tocurrencies"
+          v-model="portfolioForm.tocurrency"
         >
           <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            v-for="item in tocurrencies"
+            :key="item.currencySym"
+            :label="item.currencyFullName"
+            :value="item.currencySym"
           >
           </el-option>
         </el-select>
-      </div>
-      <div class="div10">
-        <div class="hometext">Store portfolio and see a sum of your money in local currencies
-          <br />
-          Create alert to be updated with the currency exchange rate
-          <br />
-          See a trend of the forex in the past
-        </div>
-      </div>
-      <div class="chart div10">
-        <line-chart
-          :data="data"
-          area
-        />
-      </div>
+      </el-form-item>
+    </el-form>
+    <div class="hometext">Store portfolio and see a sum of your money in local currencies
+      <br />
+      Create alert to be updated with the currency exchange rate
+      <br />
+      See a trend of the forex in the past
+    </div>
+    <div class="chart div10">
+      <line-chart
+        :data="data"
+        area
+      />
     </div>
 
   </el-container>
@@ -96,44 +105,76 @@ export default {
           ],
         },
       ],
-       options: [
-        {
-          value: "USD",
-          label: "USD",
-        },
-        {
-          value: "CAD",
-          label: "CAD",
-        },
-        {
-          value: "EURO",
-          label: "EURO",
-        },
-        {
-          value: "RMB",
-          label: "RMB",
-        },
-      ],
+      portfolioForm: {
+        fromcurrency: "",
+        tocurrency: "",
+        fromvalue: "",
+        tovalue: "",
+      },
+      fromcurrencies: [],
+      tocurrencies: [],
+      rules: {
+        fromcurrency: [
+          {
+            required: true,
+            message: "Please Select Currency",
+            trigger: "change",
+          },
+        ],
+        tocurrency: [
+          {
+            required: true,
+            message: "Please Select Currency",
+            trigger: "change",
+          },
+        ],
+        fromvalue: [
+          {
+            required: true,
+            message: "Please Enter Value",
+            trigger: "blur",
+          },
+          { type: "number", message: "Must be number" },
+        ],
+        tovalue: [
+          {
+            required: true,
+            message: "Please Enter Value",
+            trigger: "blur",
+          },
+          { type: "number", message: "Must be number" },
+        ],
+      },
     };
   },
 
-  methods:{
+  methods: {
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert("submit!");
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
     async getCurrencies() {
       let result = await this.$axios({
-      method: "GET",
-      url: $apiUrl+"api/currencies",
-      headers: {},
-      data: {},
+        method: "GET",
+        url: "https://money-maker.azurewebsites.net/api/currencies",
+        headers: {},
+        data: {},
       });
-
-      console.log(result);
-    }
+      this.fromcurrencies = result.data;
+      this.tocurrencies = result.data;
+      console.log(result.data);
+    },
   },
 
-  mounted(){
+  mounted() {
     this.getCurrencies();
   },
-
 };
 </script>
 <style>
@@ -142,9 +183,9 @@ export default {
   display: grid;
   width: 100%;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(7, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   grid-column-gap: 0px;
-  grid-row-gap: 10px;
+  grid-row-gap: 0px;
 }
 .hometext {
   margin-top: 3%;
@@ -179,8 +220,8 @@ export default {
 .div9 {
   grid-area: 3 / 3 / 4 / 4;
 }
-.div10 {
-  grid-area: 4 / 1 / 8 / 4;
+.el-form {
+  width: 100%;
 }
 .chart {
   width: 90%;
