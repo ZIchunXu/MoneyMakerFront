@@ -6,14 +6,8 @@
       :rules="rules"
       ref="portfolioForm"
     >
-      <el-form-item
-        class="div1"
-        prop="fromcurrency"
-      >
-        <el-select
-          id="fromcurrencies"
-          v-model="portfolioForm.fromcurrency"
-        >
+      <el-form-item class="div1" prop="fromcurrency">
+        <el-select id="fromcurrencies" v-model="portfolioForm.fromcurrency">
           <el-option
             v-for="item in fromcurrencies"
             :key="item.currencySym"
@@ -23,35 +17,24 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item
-        class="div2"
-        prop="fromvalue"
-      >
+      <el-form-item class="div2" prop="fromvalue">
         <el-input v-model.number="portfolioForm.fromvalue"></el-input>
       </el-form-item>
-      <div class="div3"> </div>
-      <div class="div4"> </div>
+      <div class="div3"></div>
+      <div class="div4"></div>
       <el-button
         class="div5"
         type="warning"
         @click="submitForm('portfolioForm')"
-      >Convert</el-button>
-      <div class="div6"> </div>
-      <div class="div7"> </div>
-      <el-form-item
-        class="div8"
-        prop="tovalue"
+        >Convert</el-button
       >
+      <div class="div6"></div>
+      <div class="div7"></div>
+      <el-form-item class="div8" prop="tovalue">
         <el-input v-model.number="portfolioForm.tovalue"></el-input>
       </el-form-item>
-      <el-form-item
-        class="div9"
-        prop="tocurrency"
-      >
-        <el-select
-          id="tocurrencies"
-          v-model="portfolioForm.tocurrency"
-        >
+      <el-form-item class="div9" prop="tocurrency">
+        <el-select id="tocurrencies" v-model="portfolioForm.tocurrency">
           <el-option
             v-for="item in tocurrencies"
             :key="item.currencySym"
@@ -62,19 +45,16 @@
         </el-select>
       </el-form-item>
     </el-form>
-    <div class="hometext">Store portfolio and see a sum of your money in local currencies
+    <div class="hometext">
+      Store portfolio and see a sum of your money in local currencies
       <br />
       Create alert to be updated with the currency exchange rate
       <br />
       See a trend of the forex in the past
     </div>
     <div class="chart div10">
-      <line-chart
-        :data="data"
-        area
-      />
+      <line-chart :data="data" area />
     </div>
-
   </el-container>
 </template>
 <script>
@@ -130,35 +110,38 @@ export default {
         ],
         fromvalue: [
           {
-            required: true,
+            required: false,
             message: "Please Enter Value",
             trigger: "blur",
           },
           { type: "number", message: "Must be number" },
         ],
-        tovalue: [
-          {
-            required: true,
-            message: "Please Enter Value",
-            trigger: "blur",
-          },
-          { type: "number", message: "Must be number" },
-        ],
+        tovalue: [],
       },
     };
   },
 
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+    async submitForm(formName) {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          alert("submit!");
+          let getUrl = "https://money-maker.azurewebsites.net/api/convert?from="+ this.portfolioForm.fromcurrency+"&to="+ this.portfolioForm.tocurrencies;
+          let result = await this.$axios({
+            method: "GET",
+            url: getUrl,
+            headers: {},
+            data: {},
+          });
+
+          this.tovalue = 0;
+          console.log(result.data.data);
         } else {
           console.log("error submit!!");
           return false;
         }
       });
     },
+
     async getCurrencies() {
       let result = await this.$axios({
         method: "GET",
@@ -168,7 +151,6 @@ export default {
       });
       this.fromcurrencies = result.data;
       this.tocurrencies = result.data;
-      console.log(result.data);
     },
   },
 
