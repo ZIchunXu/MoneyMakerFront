@@ -81,15 +81,10 @@ export default {
     return {
       chardata: [
         {
+          title:"Conversion chart",
           name: "",
-          data: [{
-              label: "2016",
-              value: 84000
-            },
-            {
-              label: "2017",
-              value: 90000
-            },],
+          data: [
+          ],
         },
       ],
       portfolioForm: {
@@ -131,7 +126,7 @@ export default {
     async submitForm(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          let getUrl =
+          let convertUrl =
             "https://money-maker.azurewebsites.net/api/convert?from=" +
             this.portfolioForm.fromcurrency +
             "&to=" +
@@ -143,10 +138,11 @@ export default {
             this.portfolioForm.tocurrency;
           let result = await this.$axios({
             method: "GET",
-            url: getUrl,
+            url: convertUrl,
             headers: {},
             data: {},
           });
+
           let chartresult = await this.$axios({
             method: "GET",
             url: getchartUrl,
@@ -156,9 +152,19 @@ export default {
 
           this.portfolioForm.tovalue =
             result.data.data * this.portfolioForm.fromvalue;
-          this.chardata.data = chartresult.data;
-          this.chardata.name = this.portfolioForm.fromcurrency + " to " + this.portfolioForm.tocurrency + " Conversion ";
-          console.log(chartresult.data);
+          let chartData = chartresult.data;
+          let chartName = this.portfolioForm.fromcurrency + " to " + this.portfolioForm.tocurrency + " Conversion ";
+          this.chardata[0].name = chartName;
+
+          let chartDisplayData = [];
+          for (const key in chartData) {
+            chartDisplayData.push({
+              label: key,
+              value: chartData[key]
+            })
+          }
+          this.chardata[0].data = chartDisplayData;
+          
         } else {
           console.log("error submit!!");
           return false;
