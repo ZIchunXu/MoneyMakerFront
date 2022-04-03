@@ -1,48 +1,48 @@
 <template>
-      <el-card class="box-card">
-        <el-form
-          :label-position="labelPosition"
-          label-width="100px"
-          :model="ruleForm"
-          :rules="rules"
-          ref="ruleForm"
-        >
-          <el-form-item
-            label="Email"
-            prop="email"
-          >
-            <el-input
-              v-model="ruleForm.email"
-              placeholder="Please Input Your UserName"
-            ></el-input>
-          </el-form-item>
-          <el-form-item
-            label="Password"
-            prop="password"
-          >
-            <el-input
-              v-model="ruleForm.password"
-              type="password"
-              placeholder="Please Input Your Password"
-              show-password
-            ></el-input>
-          </el-form-item>
-          <el-button
-            type="info"
-            @click="submitForm('ruleForm')"
-            style="width: 100%;  margin-bottom: 3%"
-            pa
-          >Log in</el-button>
-        </el-form>
+  <el-card class="box-card">
+    <el-form
+      :label-position="labelPosition"
+      label-width="100px"
+      :model="ruleForm"
+      :rules="rules"
+      ref="ruleForm"
+    >
+      <el-form-item
+        label="Email"
+        prop="email"
+      >
+        <el-input
+          v-model="ruleForm.email"
+          placeholder="Please Input Your UserName"
+        ></el-input>
+      </el-form-item>
+      <el-form-item
+        label="Password"
+        prop="password"
+      >
+        <el-input
+          v-model="ruleForm.password"
+          type="password"
+          placeholder="Please Input Your Password"
+          show-password
+        ></el-input>
+      </el-form-item>
+      <el-button
+        type="info"
+        @click="submitForm('ruleForm')"
+        style="width: 100%;  margin-bottom: 3%"
+        pa
+      >Log in</el-button>
+    </el-form>
 
-        <a>Not signed up yet?</a>
-        <router-link
-          to='/Signup'
-          style="text-decoration: none"
-        >
-          <el-link type="primary">Create Account</el-link>
-        </router-link>
-      </el-card>
+    <a>Not signed up yet?</a>
+    <router-link
+      to='/Signup'
+      style="text-decoration: none"
+    >
+      <el-link type="primary">Create Account</el-link>
+    </router-link>
+  </el-card>
 </template>
 
 <script>
@@ -50,6 +50,7 @@ export default {
   data() {
     return {
       labelPosition: "right",
+      userid: "",
       ruleForm: {
         email: "",
         password: "",
@@ -73,10 +74,34 @@ export default {
     };
   },
   methods: {
+    async login() {
+      try {
+        let result = await this.$axios({
+          method: "POST",
+          url: "https://money-maker.azurewebsites.net/api/login",
+          data: this.ruleForm,
+        });
+        //a@a.a
+        //Pa$$w0rd
+        if (result.data.code != 200) {
+          this.$message.error(result.data.data.message);
+          return;
+        }
+        this.userid = result.data.data.userid;
+        console.log(result.data.data.userid);
+        console.log(this.userid);
+        this.$router.push({
+          name: "DashBoard",
+          query: { userid: this.userid },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert("submit!");
+          this.login();
         } else {
           console.log("error submit!!");
           return false;

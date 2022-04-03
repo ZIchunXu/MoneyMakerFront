@@ -29,7 +29,7 @@
           >
             <el-select
               id="FromCurrency"
-              v-model="alertForm.fromvalue"
+              v-model="alertForm.fromcurrency"
             >
               <el-option
                 v-for="item in fromcurrency"
@@ -46,7 +46,7 @@
           >
             <el-select
               id="ToCurrency"
-              v-model="alertForm.tovalue"
+              v-model="alertForm.tocurrency"
             >
               <el-option
                 v-for="item in tocurrency"
@@ -101,8 +101,8 @@ export default {
     return {
       alertForm: {
         AlertName: "",
-        fromvalue: "",
-        tovalue: "",
+        fromcurrency: "",
+        tocurrency: "",
         isBelow: true,
         ConditionValue: "",
       },
@@ -126,14 +126,14 @@ export default {
             trigger: "blur",
           },
         ],
-        fromvalue: [
+        fromcurrency: [
           {
             required: true,
             message: "Please Choose Currency",
             trigger: "change",
           },
         ],
-        tovalue: [
+        tocurrency: [
           {
             required: true,
             message: "Please Choose Currency",
