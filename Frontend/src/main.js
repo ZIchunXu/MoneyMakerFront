@@ -9,6 +9,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/en'
 import DrVueEcharts from 'dr-vue-echarts';
 Vue.prototype.$axios = axios;
+Vue.prototype.$apiUrl = "https://money-maker.azurewebsites.net/api";
 Vue.use(DrVueEcharts)
 Vue.use(ElementUI, { locale })
 Vue.use(ElementUI);

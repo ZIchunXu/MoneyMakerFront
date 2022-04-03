@@ -116,6 +116,24 @@ export default {
       ],
     };
   },
+
+  methods:{
+    async getCurrencies() {
+      let result = await this.$axios({
+      method: "GET",
+      url: $apiUrl+"api/currencies",
+      headers: {},
+      data: {},
+      });
+
+      console.log(result);
+    }
+  },
+
+  mounted(){
+    this.getCurrencies();
+  },
+
 };
 </script>
 <style>
