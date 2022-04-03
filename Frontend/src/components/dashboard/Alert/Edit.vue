@@ -25,38 +25,36 @@
           </el-form-item>
           <el-form-item
             label="From:"
-            prop="FromCurrency"
+            prop="fromcurrency"
           >
             <el-select
-              v-model="alertForm.FromCurrency"
-              placeholder="CAD"
+              id="FromCurrency"
+              v-model="alertForm.fromvalue"
             >
               <el-option
-                label="CAD"
-                value="2"
-              ></el-option>
-              <el-option
-                label="USD"
-                value="3"
-              ></el-option>
+                v-for="item in fromcurrency"
+                :key="item.currencySym"
+                :label="item.currencyFullName"
+                :value="item.currencySym"
+              >
+              </el-option>
             </el-select>
           </el-form-item>
           <el-form-item
             label="To:"
-            prop="ToCurrency"
+            prop="tocurrency"
           >
             <el-select
-              v-model="alertForm.ToCurrency"
-              placeholder="CAD"
+              id="ToCurrency"
+              v-model="alertForm.tovalue"
             >
               <el-option
-                label="CAD"
-                value="2"
-              ></el-option>
-              <el-option
-                label="USD"
-                value="3"
-              ></el-option>
+                v-for="item in tocurrency"
+                :key="item.currencySym"
+                :label="item.currencyFullName"
+                :value="item.currencySym"
+              >
+              </el-option>
             </el-select>
           </el-form-item>
           <el-form-item
@@ -76,7 +74,10 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="$" prop="ConditionValue">
+          <el-form-item
+            label="$"
+            prop="ConditionValue"
+          >
             <el-input
               v-model.number="alertForm.ConditionValue"
               placeholder=""
@@ -100,11 +101,13 @@ export default {
     return {
       alertForm: {
         AlertName: "",
-        FromCurrency: "",
-        ToCurrency: "",
+        fromvalue: "",
+        tovalue: "",
         isBelow: true,
         ConditionValue: "",
       },
+      fromcurrency: [],
+      tocurrency: [],
       statusOptions: [
         {
           label: "Below",
@@ -116,21 +119,21 @@ export default {
         },
       ],
       rules: {
-          AlertName: [
-              {
+        AlertName: [
+          {
             required: true,
             message: "Please Enter AlertName",
             trigger: "blur",
           },
-          ],
-        FromCurrency: [
+        ],
+        fromvalue: [
           {
             required: true,
             message: "Please Choose Currency",
             trigger: "change",
           },
         ],
-        ToCurrency: [
+        tovalue: [
           {
             required: true,
             message: "Please Choose Currency",
@@ -160,6 +163,21 @@ export default {
         }
       });
     },
+    async getCurrencies() {
+      let result = await this.$axios({
+        method: "GET",
+        url: "https://money-maker.azurewebsites.net/api/currencies",
+        headers: {},
+        data: {},
+      });
+      this.fromcurrency = result.data;
+      this.tocurrency = result.data;
+      console.log(result.data);
+    },
+  },
+
+  mounted() {
+    this.getCurrencies();
   },
 };
 </script>

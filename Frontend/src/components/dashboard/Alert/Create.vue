@@ -25,38 +25,36 @@
           </el-form-item>
           <el-form-item
             label="From:"
-            prop="FromCurrency"
+            prop="fromcurrency"
           >
             <el-select
-              v-model="alertForm.FromCurrency"
-              placeholder="CAD"
+              id="FromCurrency"
+              v-model="alertForm.fromcurrency"
             >
               <el-option
-                label="CAD"
-                value="2"
-              ></el-option>
-              <el-option
-                label="USD"
-                value="3"
-              ></el-option>
+                v-for="item in fromcurrency"
+                :key="item.currencySym"
+                :label="item.currencyFullName"
+                :value="item.currencySym"
+              >
+              </el-option>
             </el-select>
           </el-form-item>
           <el-form-item
             label="To:"
-            prop="ToCurrency"
+            prop="tocurrency"
           >
             <el-select
-              v-model="alertForm.ToCurrency"
-              placeholder="CAD"
+              id="ToCurrency"
+              v-model="alertForm.tocurrency"
             >
               <el-option
-                label="CAD"
-                value="2"
-              ></el-option>
-              <el-option
-                label="USD"
-                value="3"
-              ></el-option>
+                v-for="item in tocurrency"
+                :key="item.currencySym"
+                :label="item.currencyFullName"
+                :value="item.currencySym"
+              >
+              </el-option>
             </el-select>
           </el-form-item>
           <el-form-item
@@ -105,11 +103,13 @@ export default {
     return {
       alertForm: {
         AlertName: "",
-        FromCurrency: "",
-        ToCurrency: "",
+        fromcurrency: "",
+        tocurrency: "",
         isBelow: true,
         ConditionValue: "",
       },
+      fromcurrency: [],
+      tocurrency: [],
       statusOptions: [
         {
           label: "Below",
@@ -128,14 +128,14 @@ export default {
             trigger: "blur",
           },
         ],
-        FromCurrency: [
+        fromcurrency: [
           {
             required: true,
             message: "Please Choose Currency",
             trigger: "change",
           },
         ],
-        ToCurrency: [
+        tocurrency: [
           {
             required: true,
             message: "Please Choose Currency",
@@ -165,6 +165,21 @@ export default {
         }
       });
     },
+    async getCurrencies() {
+      let result = await this.$axios({
+        method: "GET",
+        url: "https://money-maker.azurewebsites.net/api/currencies",
+        headers: {},
+        data: {},
+      });
+      this.fromcurrency = result.data;
+      this.tocurrency = result.data;
+      console.log(result.data);
+    },
+  },
+
+  mounted() {
+    this.getCurrencies();
   },
 };
 </script>

@@ -22,16 +22,13 @@
             prop="currencies"
           >
             <el-select
-              v-model="portfolioForm.currencies"
-              placeholder="CAD"
+              v-model="portfolioForm.currency"
             >
-              <el-option
-                label="CAD"
-                value="2"
-              ></el-option>
-              <el-option
-                label="USD"
-                value="3"
+            <el-option
+                v-for="item in currencies"
+                :key="item.currencySym"
+                :label="item.currencyFullName"
+                :value="item.currencySym"
               ></el-option>
             </el-select>
           </el-form-item>
@@ -60,11 +57,12 @@ export default {
   data() {
     return {
       portfolioForm: {
-        currencies: "",
+        currency: "",
         EntryValue: "",
       },
+      currencies:[],
       rules: {
-        currencies: [
+        currency: [
           {
             required: true,
             message: "Please Select Currency",
@@ -94,6 +92,20 @@ export default {
         }
       });
     },
+    async getCurrencies() {
+      let result = await this.$axios({
+        method: "GET",
+        url: "https://money-maker.azurewebsites.net/api/currencies",
+        headers: {},
+        data: {},
+      });
+      this.currencies = result.data;
+      console.log(result.data);
+    },
+  },
+
+  mounted() {
+    this.getCurrencies();
   },
 };
 </script>
