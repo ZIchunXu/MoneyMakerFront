@@ -9,7 +9,6 @@
         id="logo"
         src='./logo.png'
       >
-      <p id="userId" hidden>123123</p>
       <router-link to='/home'><a index="1">Home</a></router-link>
       <router-link to='/Alert'><a index="2">Alert</a></router-link>
       <router-link to='/Portfolio'><a index="3">Portfolio</a></router-link>
@@ -21,6 +20,7 @@
       </router-link>
       <div class="animation start-home"></div>
     </nav>
+    <p id="userId" hidden>123123</p>
     </el-header>
     <el-main>
       <router-view />
