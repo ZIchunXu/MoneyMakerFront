@@ -6,8 +6,14 @@
       :rules="rules"
       ref="portfolioForm"
     >
-      <el-form-item class="div1" prop="fromcurrency">
-        <el-select id="fromcurrencies" v-model="portfolioForm.fromcurrency">
+      <el-form-item
+        class="div1"
+        prop="fromcurrency"
+      >
+        <el-select
+          id="fromcurrencies"
+          v-model="portfolioForm.fromcurrency"
+        >
           <el-option
             v-for="item in fromcurrencies"
             :key="item.currencySym"
@@ -17,7 +23,10 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item class="div2" prop="fromvalue">
+      <el-form-item
+        class="div2"
+        prop="fromvalue"
+      >
         <el-input v-model.number="portfolioForm.fromvalue"></el-input>
       </el-form-item>
       <div class="div3"></div>
@@ -26,15 +35,20 @@
         class="div5"
         type="warning"
         @click="submitForm('portfolioForm')"
-        >Convert</el-button
-      >
+      >Convert</el-button>
       <div class="div6"></div>
       <div class="div7"></div>
-      <el-form-item class="div8" prop="tovalue">
-        <el-input v-model.number="portfolioForm.tovalue"></el-input>
+      <el-form-item class="div8">
+        <el-input v-model="portfolioForm.tovalue"></el-input>
       </el-form-item>
-      <el-form-item class="div9" prop="tocurrency">
-        <el-select id="tocurrencies" v-model="portfolioForm.tocurrency">
+      <el-form-item
+        class="div9"
+        prop="tocurrency"
+      >
+        <el-select
+          id="tocurrencies"
+          v-model="portfolioForm.tocurrency"
+        >
           <el-option
             v-for="item in tocurrencies"
             :key="item.currencySym"
@@ -53,7 +67,10 @@
       See a trend of the forex in the past
     </div>
     <div class="chart div10">
-      <line-chart :data="data" area />
+      <line-chart
+        :data="chardata"
+        area
+      />
     </div>
   </el-container>
 </template>
@@ -62,27 +79,17 @@ export default {
   name: "LineBase",
   data() {
     return {
-      data: [
+      chardata: [
         {
-          name: "CAD to USD Conversion",
-          data: [
-            {
+          name: "",
+          data: [{
               label: "2016",
-              value: 84000,
+              value: 84000
             },
             {
               label: "2017",
-              value: 90000,
-            },
-            {
-              label: "2018",
-              value: 80000,
-            },
-            {
-              label: "2019",
-              value: 100000,
-            },
-          ],
+              value: 90000
+            },],
         },
       ],
       portfolioForm: {
@@ -116,7 +123,6 @@ export default {
           },
           { type: "number", message: "Must be number" },
         ],
-        tovalue: [],
       },
     };
   },
@@ -125,16 +131,34 @@ export default {
     async submitForm(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          let getUrl = "https://money-maker.azurewebsites.net/api/convert?from="+ this.portfolioForm.fromcurrency+"&to="+ this.portfolioForm.tocurrencies;
+          let getUrl =
+            "https://money-maker.azurewebsites.net/api/convert?from=" +
+            this.portfolioForm.fromcurrency +
+            "&to=" +
+            this.portfolioForm.tocurrency;
+          let getchartUrl =
+            "https://money-maker.azurewebsites.net/api/chart?from=" +
+            this.portfolioForm.fromcurrency +
+            "&to=" +
+            this.portfolioForm.tocurrency;
           let result = await this.$axios({
             method: "GET",
             url: getUrl,
             headers: {},
             data: {},
           });
+          let chartresult = await this.$axios({
+            method: "GET",
+            url: getchartUrl,
+            headers: {},
+            data: {},
+          });
 
-          this.tovalue = 0;
-          console.log(result.data.data);
+          this.portfolioForm.tovalue =
+            result.data.data * this.portfolioForm.fromvalue;
+          this.chardata.data = chartresult.data;
+          this.chardata.name = this.portfolioForm.fromcurrency + " to " + this.portfolioForm.tocurrency + " Conversion ";
+          console.log(chartresult.data);
         } else {
           console.log("error submit!!");
           return false;
