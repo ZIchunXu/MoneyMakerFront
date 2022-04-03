@@ -155,7 +155,7 @@ export default {
   },
 
   methods: {
-    submitForm(formName) {
+    async submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           alert("submit!");

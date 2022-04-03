@@ -32,9 +32,12 @@ export default {
   data() {
     return {
       activeIndex: "1",
+      userid:"",
     };
   },
   methods: {
+    getParams(){
+10       },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
@@ -42,7 +45,9 @@ export default {
   //Mounted is a lifecycle hook for Vue that runs any JS scripts only after the entire view has been rendered onto DOM.
   //Loads user data
   mounted() {
-    this.loadUserData(this.user2);
+    console.log("ddd");
+    this.userid = this.$route.query.userid;
+    console.log(this.userid)
   },
 };
 </script>
