@@ -70,29 +70,6 @@
 </template>
 <script>
 export default {
-  data() {
-    return {
-      options: [
-        {
-          value: "USD",
-          label: "USD",
-        },
-        {
-          value: "CAD",
-          label: "CAD",
-        },
-        {
-          value: "EURO",
-          label: "EURO",
-        },
-        {
-          value: "RMB",
-          label: "RMB",
-        },
-      ],
-      value: "",
-    };
-  },
   name: "LineBase",
   data() {
     return {
@@ -117,6 +94,24 @@ export default {
               value: 100000,
             },
           ],
+        },
+      ],
+       options: [
+        {
+          value: "USD",
+          label: "USD",
+        },
+        {
+          value: "CAD",
+          label: "CAD",
+        },
+        {
+          value: "EURO",
+          label: "EURO",
+        },
+        {
+          value: "RMB",
+          label: "RMB",
         },
       ],
     };
@@ -171,7 +166,7 @@ export default {
 }
 .chart {
   width: 90%;
-  height: 450px;
+  height: 400px;
   margin-left: 4%;
   background-color: aliceblue;
 }
