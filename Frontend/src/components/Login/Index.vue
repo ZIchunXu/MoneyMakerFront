@@ -54,6 +54,7 @@ export default {
     return {
       labelPosition: "right",
       userid: "",
+      token:"",
       ruleForm: {
         email: "",
         password: "",
@@ -91,11 +92,12 @@ export default {
           return;
         }
         this.userid = result.data.data.userid;
+        this.token = result.data.data.token;
         console.log(result.data.data.userid);
         console.log(this.userid);
         this.$router.push({
           name: "DashBoard",
-          query: { userid: this.userid },
+          query: { userid: this.userid,  token: this.token },
         });
       } catch (error) {
         console.log(error);
@@ -112,7 +114,6 @@ export default {
       });
     },
   },
-  user: "Lillian",
 };
 </script>
 

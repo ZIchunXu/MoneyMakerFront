@@ -16,34 +16,34 @@
         <router-link
           id="nav2"
           to='/Alert'
-          v-if="userid != null"
+          v-if="token != null"
         ><a>Alert</a></router-link>
         <router-link
           id="nav3"
           to='/Portfolio'
-          v-if="userid != null"
+          v-if="token != null"
         ><a>Portfolio</a></router-link>
         <router-link
           id="nav4"
           to='/Login'
         >
-          <a v-if="userid == null">Login</a>
+          <a v-if="token == null">Login</a>
           <a
-            v-if="userid != null"
+            v-if="token != null"
             @click="logout()"
           >Logout</a>
         </router-link>
         <router-link
           id="nav5"
           to='/Signup'
-          v-if="userid == null"
+          v-if="token == null"
         >
           <a>Register</a>
         </router-link>
         <div class="animation start-home"></div>
       </nav>
       <p
-        id="userId"
+        id="token"
         hidden
       >123123</p>
     </el-header>
@@ -57,14 +57,14 @@ export default {
   data() {
     return {
       activeIndex: "1",
-      userid: "",
+      token: "",
     };
   },
   methods: {
     logout() {
-      this.userid = "";
+      this.token = "";
       console.log("ddd");
-      console.log(this.userid);
+      console.log(this.token);
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
@@ -73,8 +73,7 @@ export default {
   //Mounted is a lifecycle hook for Vue that runs any JS scripts only after the entire view has been rendered onto DOM.
   //Loads user data
   mounted() {
-    this.userid = this.$route.query.userid;
-    console.log(this.userid);
+    this.token = this.$route.query.token;
   },
 };
 </script>
