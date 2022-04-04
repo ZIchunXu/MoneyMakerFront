@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import axios from "axios";
+import VueCookie from "vue-cookie";
 import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -10,6 +11,7 @@ import locale from 'element-ui/lib/locale/lang/en'
 import DrVueEcharts from 'dr-vue-echarts';
 Vue.prototype.$axios = axios;
 Vue.prototype.$apiUrl = "https://money-maker.azurewebsites.net/";
+Vue.use(VueCookie);
 Vue.use(DrVueEcharts)
 Vue.use(ElementUI, { locale })
 Vue.use(ElementUI);

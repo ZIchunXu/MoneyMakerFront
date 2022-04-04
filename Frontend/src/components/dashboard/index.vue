@@ -48,33 +48,29 @@ export default {
   data() {
     return {
       activeIndex: "1",
-      userid: "",
-      token:"",
     };
   },
   methods: {
     async toHome() {
        this.$router.push({
           name: "Home",
-          query: { token: this.token },
         });
     },
     async toAlert() {
       this.$router.push({
           name: "Alert",
-          query: { token: this.token },
         });
     },
     async toPortfolio() {
       this.$router.push({
           name: "Portfolio",
-          query: { token: this.token },
         });
     },
     async logout() {
-      this.userid = "";
-      console.log("ddd");
-      console.log(this.userid);
+      this.$cookie.delete("token");
+      this.$cookie.delete("userid");
+      console.log("cleared token & userid");
+      console.log(JSON.parse(this.$cookie.get("userid")));
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
@@ -83,7 +79,6 @@ export default {
   //Mounted is a lifecycle hook for Vue that runs any JS scripts only after the entire view has been rendered onto DOM.
   //Loads user data
   mounted() {
-    this.token = this.$route.query.token;
   },
 };
 </script>
