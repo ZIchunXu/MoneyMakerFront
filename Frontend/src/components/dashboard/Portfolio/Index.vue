@@ -29,25 +29,10 @@
         prop="EntryValue"
       >
       </el-table-column>
-      <el-table-column>
-        <template slot="header">
-        </template>
-      </el-table-column>
-      <el-table-column label="Action">
-        <template slot-scope="scope">
-          <router-link :to="{
-                name: 'Edit',
-                params: { UserId: scope.row.UserId },
-              }">
+      <el-table-column label="Action" 
+        width="200px">
             <el-button type="warning">Edit</el-button>
-          </router-link>
-          <router-link :to="{
-                name: 'Delete',
-                params: { UserId: scope.row.UserId },
-              }">
             <el-button type="warning">Delete</el-button>
-          </router-link>
-        </template>
       </el-table-column>
     </el-table>
   </div>

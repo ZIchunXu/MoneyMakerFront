@@ -165,24 +165,26 @@ export default {
           let result = await this.$axios({
             method: "POST",
             url:
-              "https://money-maker.azurewebsites.net/api/alert?Token=" + token,
+              "https://money-maker.azurewebsites.net/api/alerts?Token=" + token,
             headers: {},
             data: {
-              "userid": userid,
-              "fromCurrency": this.alertForm.fromcurrency,
-              "toCurrency": this.alertForm.tocurrency,
-              "alertName": this.alertForm.AlertName,
-              "isBelow": this.alertForm.formName,
-              "conditionValue": this.alertForm.ConditionValue
+              userid: userid,
+              fromCurrency: this.alertForm.fromcurrency,
+              toCurrency: this.alertForm.tocurrency,
+              alertName: this.alertForm.AlertName,
+              isBelow: this.alertForm.formName,
+              conditionValue: this.alertForm.ConditionValue,
             },
           });
 
-          console.log(result)
+          console.log(result);
+          this.$router.push({
+            name: "Alert",
+          });
           if (result.data.code != 200) {
             this.$message.error(result.data.data.message);
             return;
           }
-
         } else {
           console.log("error submit!!");
           return false;

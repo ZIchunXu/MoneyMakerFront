@@ -42,14 +42,14 @@
           </el-form-item>
           <el-form-item
             label="To:"
-            prop="tocurrency"
+            prop="toCurrency"
           >
             <el-select
-              id="ToCurrency"
-              v-model="alertForm.tocurrency"
+              id="toCurrency"
+              v-model="alertForm.toCurrency"
             >
               <el-option
-                v-for="item in tocurrency"
+                v-for="item in toCurrency"
                 :key="item.currencySym"
                 :label="item.currencyFullName"
                 :value="item.currencySym"
@@ -102,12 +102,12 @@ export default {
       alertForm: {
         AlertName: "",
         fromcurrency: "",
-        tocurrency: "",
+        toCurrency: "",
         isBelow: true,
         ConditionValue: "",
       },
       fromcurrency: [],
-      tocurrency: [],
+      toCurrency: [],
       statusOptions: [
         {
           label: "Below",
@@ -133,7 +133,7 @@ export default {
             trigger: "change",
           },
         ],
-        tocurrency: [
+        toCurrency: [
           {
             required: true,
             message: "Please Choose Currency",
@@ -153,10 +153,60 @@ export default {
   },
 
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+    async getAlert() {
+      try {
+        let cookie = this.$cookie.get("token");
+        let token = JSON.parse(cookie);
+        let result = await this.$axios({
+          method: "GET",
+          url: "https://money-maker.azurewebsites.net/api/alerts?Token=" + token,
+          headers: {},
+          data: {},
+        });
+        if (result.data.code != 200) {
+          this.$message.error(result.data.message);
+          return;
+        }
+         console.log(result.data.data.alert.fromcurrency);
+      } catch (error) {
+        this.$message.error(error);
+        console.log(error);
+      }
+    },
+    async getParams(){
+    this.fromCurrency = this.$route.params.fromCurrency;
+    this.toCurrency = this.$route.params.toCurrency;
+    },
+    async submitForm(formName) {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          alert("submit!");
+          let cookie = this.$cookie.get("token");
+          let userid = this.$cookie.get("userid");
+          let token = JSON.parse(cookie);
+
+          let result = await this.$axios({
+            method: "POST",
+            url:
+              "https://money-maker.azurewebsites.net/api/alerts?Token=" + token,
+            headers: {},
+            data: {
+              userid: userid,
+              fromCurrency: this.alertForm.fromcurrency,
+              toCurrency: this.alertForm.toCurrency,
+              alertName: this.alertForm.AlertName,
+              isBelow: this.alertForm.formName,
+              conditionValue: this.alertForm.ConditionValue,
+            },
+          });
+
+          console.log(result);
+          this.$router.push({
+            name: "Alert",
+          });
+          if (result.data.code != 200) {
+            this.$message.error(result.data.data.message);
+            return;
+          }
         } else {
           console.log("error submit!!");
           return false;
@@ -171,13 +221,18 @@ export default {
         data: {},
       });
       this.fromcurrency = result.data;
-      this.tocurrency = result.data;
-      console.log(result.data);
+      this.toCurrency = result.data;
     },
   },
 
   mounted() {
     this.getCurrencies();
+    this.token = JSON.parse(this.$cookie.get("token"));
+    console.log(this.token);
+    this.getParams();
+    console.log("hahaha");
+    console.log(this.toCurrency);
+    this.getAlert();
   },
 };
 </script>

@@ -14,7 +14,6 @@
     <!-- Alert Table -->
     <el-table
       :data="alert"
-      :row-class-name="tableRowClassName"
       border
     >
 
@@ -43,36 +42,27 @@
         label="Below/Above"
         prop="isBelow"
       ><template slot-scope="scope">
-            {{scope.row.isBelow ? "Below":"Above"}}
-          </template>
+          {{scope.row.isBelow ? "Below":"Above"}}
+        </template>
       </el-table-column>
       <el-table-column
         label="ConditionValue"
         prop="conditionValue"
       ></el-table-column>
       <el-table-column
-        align="right"
-        fixed="right"
-      >
-        <template slot="header">
-        </template>
-      </el-table-column>
-      <el-table-column
         label="Action"
-      >
-        <template slot-scope="scope">
+        width="200px"
+      ><template slot-scope="scope">
           <router-link :to="{
-                name: 'Edit',
-                params: { UserId: scope.row.UserId },
+                name: 'editAlert',
+                params: {
+                  fromCurrency: scope.row.fromCurrency,
+                  toCurrency: scope.row.toCurrency,
+        },
               }">
             <el-button type="warning">Edit</el-button>
           </router-link>
-          <router-link :to="{
-                name: 'Delete',
-                params: { UserId: scope.row.UserId },
-              }">
-            <el-button type="warning">Delete</el-button>
-          </router-link>
+          <el-button type="warning">Delete</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -84,9 +74,7 @@ export default {
   //=========================================// SAMPLE DATA //=======================================================//
   data() {
     return {
-      token: "",
-      alert: [
-      ],
+      alert: [],
 
       //b) TEST DATA: Current User Entity
       currentUser: {},
@@ -101,11 +89,11 @@ export default {
         let result = await this.$axios({
           method: "GET",
           url:
-            "https://money-maker.azurewebsites.net/api/alert?Token=" + token,
+            "https://money-maker.azurewebsites.net/api/alerts?Token=" + token,
           headers: {},
           data: {},
         });
-         if (result.data.code != 200) {
+        if (result.data.code != 200) {
           this.$message.error(result.data.message);
           return;
         }
@@ -119,8 +107,7 @@ export default {
     },
   },
   mounted() {
-    console.log("1111");
-    this.token = this.$route.query.token;
+    this.token = JSON.parse(this.$cookie.get("token"));
     console.log(this.token);
     this.getAlert();
   },
@@ -131,7 +118,6 @@ export default {
 .el-table {
   margin-top: 50px;
   width: 80%;
-  margin-right: 10%;
   margin-left: 10%;
 }
 .el-col {
