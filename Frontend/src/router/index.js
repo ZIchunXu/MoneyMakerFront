@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/Login/Index'
 import Signup from '@/components/Signup/signup'
-import DashBoard from "@/components/dashboard/Index";
+import DashBoard from "@/components/dashboard/index";
 import Home from "@/components/dashboard/Home/home";
 import createAlert from "@/components/dashboard/Alert/Create"
 import editAlert from "@/components/dashboard/Alert/Edit"
