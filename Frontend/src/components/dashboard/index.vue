@@ -10,20 +10,24 @@
           src='./logo.png'
         >
         <div
-          id="nav1" @click="toHome()"
+          id="nav1"
+          @click="toHome()"
         ><a>Home</a></div>
         <div
           id="nav2"
-          v-if="token != null"  @click="toAlert()"
+          v-if="token != null"
+          @click="toAlert()"
         ><a>Alert</a></div>
         <div
           id="nav3"
-          v-if="token != null"  @click="toPortfolio()"
+          v-if="token != null"
+          @click="toPortfolio()"
         ><a>Portfolio</a></div>
-        <div
-          id="nav4"
-        >
-          <a v-if="token == null" @click="login()">Login</a>
+        <div id="nav4">
+          <a
+            v-if="token == null"
+            @click="login()"
+          >Login</a>
           <a
             v-if="token != null"
             @click="logout()"
@@ -47,40 +51,40 @@
 export default {
   data() {
     return {
-      activeIndex: "1",
+      token:"",
     };
   },
   methods: {
     async toHome() {
-       this.$router.push({
-          name: "Home",
-        });
+      this.$router.push({
+        name: "Home",
+      });
     },
     async toAlert() {
       this.$router.push({
-          name: "Alert",
-        });
+        name: "Alert",
+      });
     },
     async toPortfolio() {
       this.$router.push({
-          name: "Portfolio",
-        });
+        name: "Portfolio",
+      });
     },
     async login() {
       this.$router.push({
-          name: "Login",
-        });
+        name: "Login",
+      });
     },
     async register() {
       this.$router.push({
-          name: "Signup",
-        });
+        name: "Signup",
+      });
     },
     async logout() {
       this.token = null;
       this.$router.push({
-          name: "DashBoard",
-        });
+        name: "DashBoard",
+      });
       this.$cookie.delete("token");
       this.$cookie.delete("userid");
       console.log("cleared token & userid");
@@ -93,6 +97,9 @@ export default {
   //Mounted is a lifecycle hook for Vue that runs any JS scripts only after the entire view has been rendered onto DOM.
   //Loads user data
   mounted() {
+    this.token = JSON.parse(console.log(this.$cookie.get("token")));
+    //console.log(this.$cookie.get("token"));
+    console.log(this.token);
   },
 };
 </script>
