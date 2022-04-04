@@ -21,29 +21,33 @@
       <!-- AlertName Column -->
       <el-table-column
         label="AlertName"
-        prop="AlertName"
+        prop="alertName"
       >
       </el-table-column>
       <el-table-column
         label="Created On"
-        prop="date"
+        prop="createDate"
       >
       </el-table-column>
       <el-table-column
         label="FromCurrency"
-        prop="FromCurrency"
+        prop="fromCurrency"
       >
       </el-table-column>
       <el-table-column
         label="ToCurrency"
-        prop="ToCurrency"
+        prop="toCurrency"
       >
       </el-table-column>
       <el-table-column
         label="Below/Above"
-        prop="ConditionValue"
+        prop="isBelow"
       >
       </el-table-column>
+      <el-table-column
+        label="ConditionValue"
+        prop="conditionValue"
+      ></el-table-column>
       <el-table-column
         align="right"
         fixed="right"
@@ -52,7 +56,6 @@
         </template>
       </el-table-column>
       <el-table-column
-        fixed="right"
         label="Action"
       >
         <template slot-scope="scope">
@@ -81,8 +84,6 @@ export default {
     return {
       token: "",
       alert: [
-        {
-        },
       ],
 
       //b) TEST DATA: Current User Entity
@@ -105,8 +106,9 @@ export default {
           this.$message.error(result.data.message);
           return;
         }
-       this.alert = result.data.data.list;
-        console.log(result.data.data.list);
+        this.alert = result.data.data.alert;
+        console.log(result.data.data.alert);
+        console.log(this.alert);
       } catch (error) {
         this.$message.error(error);
         console.log(error);
@@ -115,6 +117,8 @@ export default {
   },
   mounted() {
     console.log("1111");
+    this.token = this.$route.query.token;
+    console.log(this.token);
     this.getAlert();
   },
 };
