@@ -27,10 +27,13 @@
           show-password
         ></el-input>
       </el-form-item>
+      <router-link to="/home">
+          <el-button type="danger" style="width: 48%;  margin-bottom: 3%">Back to Home</el-button>
+        </router-link>
       <el-button
-        type="info"
+        type="warning"
         @click="submitForm('ruleForm')"
-        style="width: 100%;  margin-bottom: 3%"
+        style="width: 48%;  margin-bottom: 3%"
         pa
       >Log in</el-button>
     </el-form>

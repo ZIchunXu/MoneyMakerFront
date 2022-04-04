@@ -1,26 +1,51 @@
  <template>
   <el-container>
     <el-header>
-    <nav
-      :default-active="activeIndex"
-      @select="handleSelect"
-    >
-      <img
-        id="logo"
-        src='./logo.png'
+      <nav
+        :default-active="activeIndex"
+        @select="handleSelect"
       >
-      <router-link id="nav1" to='/home'><a index="1">Home</a></router-link>
-      <router-link id="nav2" to='/Alert' v-if="userid != null"><a index="2">Alert</a></router-link>
-      <router-link id="nav3" to='/Portfolio' v-if="userid != null"><a index="3">Portfolio</a></router-link>
-      <router-link id="nav4" to='/Login' v-if="userid == null">
-        <a index="4">Login</a>
-      </router-link>
-      <router-link id="nav5" to='/Signup'  v-if="userid == null">
-        <a index="5">Register</a>
-      </router-link>
-      <div class="animation start-home"></div>
-    </nav>
-    <p id="userId" hidden>123123</p>
+        <img
+          id="logo"
+          src='./logo.png'
+        >
+        <router-link
+          id="nav1"
+          to='/home'
+        ><a>Home</a></router-link>
+        <router-link
+          id="nav2"
+          to='/Alert'
+          v-if="userid != null"
+        ><a>Alert</a></router-link>
+        <router-link
+          id="nav3"
+          to='/Portfolio'
+          v-if="userid != null"
+        ><a>Portfolio</a></router-link>
+        <router-link
+          id="nav4"
+          to='/Login'
+        >
+          <a v-if="userid == null">Login</a>
+          <a
+            v-if="userid != null"
+            @click="logout()"
+          >Logout</a>
+        </router-link>
+        <router-link
+          id="nav5"
+          to='/Signup'
+          v-if="userid == null"
+        >
+          <a>Register</a>
+        </router-link>
+        <div class="animation start-home"></div>
+      </nav>
+      <p
+        id="userId"
+        hidden
+      >123123</p>
     </el-header>
     <el-main>
       <router-view />
@@ -32,12 +57,15 @@ export default {
   data() {
     return {
       activeIndex: "1",
-      userid:"",
+      userid: "",
     };
   },
   methods: {
-    getParams(){
-10       },
+    logout() {
+      this.userid = "";
+      console.log("ddd");
+      console.log(this.userid);
+    },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
@@ -45,9 +73,8 @@ export default {
   //Mounted is a lifecycle hook for Vue that runs any JS scripts only after the entire view has been rendered onto DOM.
   //Loads user data
   mounted() {
-    console.log("ddd");
     this.userid = this.$route.query.userid;
-    console.log(this.userid)
+    console.log(this.userid);
   },
 };
 </script>
