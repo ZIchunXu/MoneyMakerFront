@@ -42,7 +42,9 @@
       <el-table-column
         label="Below/Above"
         prop="isBelow"
-      >
+      ><template slot-scope="scope">
+            {{scope.row.isBelow ? "Below":"Above"}}
+          </template>
       </el-table-column>
       <el-table-column
         label="ConditionValue"
