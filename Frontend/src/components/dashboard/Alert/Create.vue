@@ -156,9 +156,33 @@ export default {
 
   methods: {
     async submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          alert("submit!");
+          let cookie = this.$cookie.get("token");
+          let userid = this.$cookie.get("userid");
+          let token = JSON.parse(cookie);
+
+          let result = await this.$axios({
+            method: "POST",
+            url:
+              "https://money-maker.azurewebsites.net/api/alert?Token=" + token,
+            headers: {},
+            data: {
+              "userid": userid,
+              "fromCurrency": this.alertForm.fromcurrency,
+              "toCurrency": this.alertForm.tocurrency,
+              "alertName": this.alertForm.AlertName,
+              "isBelow": this.alertForm.formName,
+              "conditionValue": this.alertForm.ConditionValue
+            },
+          });
+
+          console.log(result)
+          if (result.data.code != 200) {
+            this.$message.error(result.data.data.message);
+            return;
+          }
+
         } else {
           console.log("error submit!!");
           return false;
