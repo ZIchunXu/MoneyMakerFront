@@ -9,13 +9,13 @@
         id="logo"
         src='./logo.png'
       >
-      <router-link to='/home'><a index="1">Home</a></router-link>
-      <router-link to='/Alert'><a index="2">Alert</a></router-link>
-      <router-link to='/Portfolio'><a index="3">Portfolio</a></router-link>
-      <router-link to='/Login'>
+      <router-link id="nav1" to='/home'><a index="1">Home</a></router-link>
+      <router-link id="nav2" to='/Alert' v-if="userid != null"><a index="2">Alert</a></router-link>
+      <router-link id="nav3" to='/Portfolio' v-if="userid != null"><a index="3">Portfolio</a></router-link>
+      <router-link id="nav4" to='/Login' v-if="userid == null">
         <a index="4">Login</a>
       </router-link>
-      <router-link to='/Signup'>
+      <router-link id="nav5" to='/Signup'  v-if="userid == null">
         <a index="5">Register</a>
       </router-link>
       <div class="animation start-home"></div>
@@ -98,51 +98,51 @@ nav a:nth-child(1) {
   width: 100px;
   float: left;
 }
-nav a:nth-child(2) {
+#nav1 {
   width: 110px;
   float: left;
 }
-nav a:nth-child(3) {
+#nav2 {
   width: 125px;
   float: left;
 }
-nav a:nth-child(4) {
+#nav3 {
   width: 160px;
   float: left;
 }
-nav a:nth-child(5) {
+#nav4 {
   width: 120px;
   float: right;
 }
-nav a:nth-child(6) {
+#nav5 {
   width: 120px;
   float: right;
 }
 
-a:nth-child(2):hover ~ .animation {
+#nav1:hover ~ .animation {
   width: 110px;
   left: 210px;
   background-color: #5bdfce;
 }
 
-a:nth-child(3):hover ~ .animation {
+#nav2:hover ~ .animation {
   width: 120px;
   left: 310px;
   background-color: #49bdc4;
 }
 
-a:nth-child(4):hover ~ .animation {
+#nav3:hover ~ .animation {
   width: 140px;
   left: 435px;
   background-color: #15abb3;
 }
 
-a:nth-child(5):hover ~ .animation {
+#nav4:hover ~ .animation {
   width: 120px;
   right: 10px;
   background-color: #eeefdf;
 }
-a:nth-child(6):hover ~ .animation {
+#nav5:hover ~ .animation {
   width: 135px;
   right: 120px;
   background-color: #eeefdf;
