@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container class="HomeContainer">
     <el-form
       class="parent"
       :model="portfolioForm"
@@ -59,14 +59,14 @@
         </el-select>
       </el-form-item>
     </el-form>
-    <div class="hometext">
+    <div class="hometext" v-if="!converted">
       Store portfolio and see a sum of your money in local currencies
       <br />
       Create alert to be updated with the currency exchange rate
       <br />
       See a trend of the forex in the past
     </div>
-    <div class="chart div10">
+    <div class="chart div10" v-if="converted">
       <line-chart
         :data="chardata"
         area
@@ -119,6 +119,7 @@ export default {
           { type: "number", message: "Must be number" },
         ],
       },
+      converted:false,
     };
   },
 
@@ -164,7 +165,7 @@ export default {
             })
           }
           this.chardata[0].data = chartDisplayData;
-          
+          this.converted = true;
         } else {
           console.log("error submit!!");
           return false;
@@ -190,6 +191,12 @@ export default {
 };
 </script>
 <style>
+.HomeContainer{
+  flex-direction: column;
+}
+.div5{
+  margin-bottom: 15px;
+}
 .parent {
   margin-top: 3%;
   display: grid;
@@ -235,7 +242,11 @@ export default {
 .el-form {
   width: 100%;
 }
+.div10{
+margin-top: 100px;
+}
 .chart {
+  
   width: 90%;
   height: 400px;
   margin-left: 4%;
