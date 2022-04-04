@@ -9,43 +9,34 @@
           id="logo"
           src='./logo.png'
         >
-        <router-link
-          id="nav1"
-          to='/home'
-        ><a>Home</a></router-link>
-        <router-link
+        <div
+          id="nav1" @click="toHome()"
+        ><a>Home</a></div>
+        <div
           id="nav2"
-          to='/Alert'
-          v-if="token != null"
-        ><a>Alert</a></router-link>
-        <router-link
+          v-if="userid != null"  @click="toAlert()"
+        ><a>Alert</a></div>
+        <div
           id="nav3"
-          to='/Portfolio'
-          v-if="token != null"
-        ><a>Portfolio</a></router-link>
-        <router-link
+          v-if="userid != null"  @click="toPortfolio()"
+        ><a>Portfolio</a></div>
+        <div
           id="nav4"
-          to='/Login'
         >
-          <a v-if="token == null">Login</a>
+          <a v-if="userid == null">Login</a>
           <a
-            v-if="token != null"
+            v-if="userid != null"
             @click="logout()"
           >Logout</a>
-        </router-link>
-        <router-link
+        </div>
+        <div
           id="nav5"
-          to='/Signup'
-          v-if="token == null"
+          v-if="userid == null"
         >
           <a>Register</a>
-        </router-link>
+        </div>
         <div class="animation start-home"></div>
       </nav>
-      <p
-        id="token"
-        hidden
-      >123123</p>
     </el-header>
     <el-main>
       <router-view />
@@ -57,14 +48,33 @@ export default {
   data() {
     return {
       activeIndex: "1",
-      token: "",
+      userid: "",
+      token:"",
     };
   },
   methods: {
-    logout() {
-      this.token = "";
+    async toHome() {
+       this.$router.push({
+          name: "Home",
+          query: { token: this.token },
+        });
+    },
+    async toAlert() {
+      this.$router.push({
+          name: "Alert",
+          query: { token: this.token },
+        });
+    },
+    async toPortfolio() {
+      this.$router.push({
+          name: "Portfolio",
+          query: { token: this.token },
+        });
+    },
+    async logout() {
+      this.userid = "";
       console.log("ddd");
-      console.log(this.token);
+      console.log(this.userid);
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);

@@ -79,39 +79,41 @@ export default {
   //=========================================// SAMPLE DATA //=======================================================//
   data() {
     return {
-      token:"",
+      token: "",
       alert: [
         {
-          userid: 1, 
-          AlertName: "alert1",
-          date: "111", 
-          FromCurrency: "USD", 
-          ToCurrency: "CAD", 
-          ConditionValue: "Above",
         },
       ],
 
       //b) TEST DATA: Current User Entity
-      currentUser: {
-      },
+      currentUser: {},
     };
   },
   //=========================================// END OF SAMPLE DATA //=======================================================//
   methods: {
     async getAlert() {
-      let result = await this.$axios({
-        method: "GET",
-        url: "https://money-maker.azurewebsites.net/api/alert?Token=" + this.token,
-        headers: {},
-        data: {},
-      });
-      this.alert.AlertName = result.data.data;
-      this.alert.AlertName = result.data;
-      console.log(result.data.data);
+      try {
+        let result = await this.$axios({
+          method: "GET",
+          url:
+            "https://money-maker.azurewebsites.net/api/alert?Token=" +
+            this.token,
+          headers: {},
+          data: {},
+        });
+         if (result.data.code != 200) {
+          this.$message.error(result.data.message);
+          return;
+        }
+       this.alert = result.data.data.list;
+        console.log(result.data.data.list);
+      } catch (error) {
+        this.$message.error(error);
+        console.log(error);
+      }
     },
   },
-   mounted() {
-     
+  mounted() {
     console.log("1111");
     this.getAlert();
   },
