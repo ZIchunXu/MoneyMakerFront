@@ -96,11 +96,12 @@ export default {
   methods: {
     async getAlert() {
       try {
+        let cookie = this.$cookie.get("token");
+        let token = JSON.parse(cookie);
         let result = await this.$axios({
           method: "GET",
           url:
-            "https://money-maker.azurewebsites.net/api/alert?Token=" +
-            this.token,
+            "https://money-maker.azurewebsites.net/api/alert?Token=" + token,
           headers: {},
           data: {},
         });

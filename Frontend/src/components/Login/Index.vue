@@ -53,8 +53,6 @@ export default {
   data() {
     return {
       labelPosition: "right",
-      userid: "",
-      token:"",
       ruleForm: {
         email: "",
         password: "",
@@ -91,11 +89,11 @@ export default {
           this.$message.error(result.data.data.message);
           return;
         }
-        this.userid = result.data.data.userid;
-        this.token = result.data.data.token;
+        this.$cookie.set("token", JSON.stringify(result.data.data.token), { expires: "30d" });
+        this.$cookie.set("userid", JSON.stringify(result.data.data.userid), { expires: "30d" });
+        console.log(this.$cookie.get("token"));
         this.$router.push({
           name: "DashBoard",
-          query: { token: this.token },
         });
       } catch (error) {
         console.log(error);
