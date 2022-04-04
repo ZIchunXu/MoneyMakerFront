@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/components/Login/index'
+import Login from '@/components/Login/Index'
 import Signup from '@/components/Signup/signup'
-import DashBoard from "@/components/dashboard/index";
+import DashBoard from "@/components/dashboard/Index";
 import Home from "@/components/dashboard/Home/home";
 import createAlert from "@/components/dashboard/Alert/Create"
 import editAlert from "@/components/dashboard/Alert/Edit"
-import Alert from "@/components/dashboard/Alert/index"
+import Alert from "@/components/dashboard/Alert/Index"
 import createPortfolio from "@/components/dashboard/Portfolio/Create"
 import editPortfolio from "@/components/dashboard/Portfolio/Edit"
-import Portfolio from "@/components/dashboard/Portfolio/index"
+import Portfolio from "@/components/dashboard/Portfolio/Index"
 import NotFound from "@/components/dashboard/NotFound";
 
 Vue.use(Router)
