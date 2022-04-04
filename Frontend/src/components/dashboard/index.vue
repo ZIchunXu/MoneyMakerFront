@@ -14,26 +14,26 @@
         ><a>Home</a></div>
         <div
           id="nav2"
-          v-if="userid != null"  @click="toAlert()"
+          v-if="token != null"  @click="toAlert()"
         ><a>Alert</a></div>
         <div
           id="nav3"
-          v-if="userid != null"  @click="toPortfolio()"
+          v-if="token != null"  @click="toPortfolio()"
         ><a>Portfolio</a></div>
         <div
           id="nav4"
         >
-          <a v-if="userid == null">Login</a>
+          <a v-if="token == null" @click="login()">Login</a>
           <a
-            v-if="userid != null"
+            v-if="token != null"
             @click="logout()"
           >Logout</a>
         </div>
         <div
           id="nav5"
-          v-if="userid == null"
+          v-if="token == null"
         >
-          <a>Register</a>
+          <a @click="register()">Register</a>
         </div>
         <div class="animation start-home"></div>
       </nav>
@@ -71,10 +71,21 @@ export default {
           query: { token: this.token },
         });
     },
+    async login() {
+      this.$router.push({
+          name: "Login",
+        });
+    },
+    async register() {
+      this.$router.push({
+          name: "Signup",
+        });
+    },
     async logout() {
-      this.userid = "";
-      console.log("ddd");
-      console.log(this.userid);
+      this.token = null;
+      this.$router.push({
+          name: "DashBoard",
+        });
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
