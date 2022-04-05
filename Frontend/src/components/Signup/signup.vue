@@ -30,13 +30,16 @@
           >
             <el-input v-model="userForm.confirm_password"></el-input>
           </el-form-item>
-          
-          <el-form-item>
-            <el-button
-              style="margin-top: 12px;"
-               @click="submitForm('userForm')"
-            >Submit</el-button>
-          </el-form-item>
+
+          <el-button
+            type="danger"
+            style="width: 48%;  margin-bottom: 3%"
+          >Back to Home</el-button>
+          <el-button
+            type="warning"
+            style="width: 48%;  margin-bottom: 3%"
+            @click="submitForm('userForm')"
+          >Submit</el-button>
         </el-form>
       </el-card>
     </el-main>
@@ -67,14 +70,8 @@ export default {
     };
     return {
       userForm: {
-        email: "123456789",
-        password: "123456789",
-        confirm_password: "123456789",
-      },
-      methods: {
-        register() {
-          console.log("register button was clicked");
-        },
+        email:"",
+        password:"",
       },
       rules: {
         email: [
@@ -116,22 +113,27 @@ export default {
     };
   },
   methods: {
-    next(name) {
-      if (this.active === 0 || this.active === 1) {
-        this.$refs[name].validate((valid) => {
-          if (valid) {
-            this.active++;
-          } else {
-            console.log("error submit!!");
-            return false;
-          }
+    async register() {
+      try {
+        let result = await this.$axios({
+          method: "POST",
+          url: "https://money-maker.azurewebsites.net/api/register",
+          data: { 
+            email: this.userForm.email, 
+            password: this.userForm.password },
         });
-      }
-    },
-    submit() {
-      if (this.active++ > 2) {
-        alert("submit!");
-        this.active = success;
+        //a@a.a
+        //Pa$$w0rd
+        if (result.data.code != 200) {
+          this.$message.error(result.data.data.message);
+          return;
+        }
+        console.log(this.$cookie.get("token"));
+        this.$router.push({
+          name: "DashBoard",
+        });
+      } catch (error) {
+        console.log(error);
       }
     },
     submitForm(formName) {
@@ -143,12 +145,6 @@ export default {
           return false;
         }
       });
-    },
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
-    handlePreview(file) {
-      console.log(file);
     },
   },
 };
@@ -166,5 +162,4 @@ export default {
   margin-right: 24%;
   margin-top: 300px;
 }
-
 </style>
