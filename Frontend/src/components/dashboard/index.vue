@@ -97,9 +97,7 @@ export default {
   //Mounted is a lifecycle hook for Vue that runs any JS scripts only after the entire view has been rendered onto DOM.
   //Loads user data
   mounted() {
-    this.token = JSON.parse(console.log(this.$cookie.get("token")));
-    //console.log(this.$cookie.get("token"));
-    console.log(this.token);
+    this.token = JSON.parse(this.$cookie.get("userid"));
   },
 };
 </script>
@@ -146,10 +144,6 @@ nav .animation {
   transition: all 0.5s ease 0s;
   border-radius: 8px;
 }
-nav a:nth-child(1) {
-  width: 100px;
-  float: left;
-}
 #nav1 {
   width: 110px;
   float: left;
@@ -173,30 +167,30 @@ nav a:nth-child(1) {
 
 #nav1:hover ~ .animation {
   width: 110px;
-  left: 210px;
+  left: 215px;
   background-color: #5bdfce;
 }
 
 #nav2:hover ~ .animation {
   width: 120px;
-  left: 310px;
+  left: 325px;
   background-color: #49bdc4;
 }
 
 #nav3:hover ~ .animation {
   width: 140px;
-  left: 435px;
+  left: 455px;
   background-color: #15abb3;
 }
 
 #nav4:hover ~ .animation {
   width: 120px;
-  right: 10px;
+  right: 0px;
   background-color: #eeefdf;
 }
 #nav5:hover ~ .animation {
   width: 135px;
-  right: 120px;
+  right: 110px;
   background-color: #eeefdf;
 }
 </style>

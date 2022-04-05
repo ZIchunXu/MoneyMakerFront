@@ -27,9 +27,13 @@
           show-password
         ></el-input>
       </el-form-item>
-      <router-link to="/home">
-          <el-button type="danger" style="width: 48%;  margin-bottom: 3%">Back to Home</el-button>
-        </router-link>
+      <router-link to="Home">
+        <el-button
+          type="danger"
+          style="width: 48%;  margin-bottom: 3%"
+          @click="back()"
+        >Back to Home</el-button>
+      </router-link>
       <el-button
         type="warning"
         @click="submitForm('ruleForm')"
@@ -76,6 +80,14 @@ export default {
     };
   },
   methods: {
+    async back() {
+      this.$cookie.delete("token");
+      this.$cookie.delete("userid");
+      console.log(this.$cookie.get("token"));
+      this.$router.push({
+        name: "DashBoard",
+      });
+    },
     async login() {
       try {
         let result = await this.$axios({
@@ -89,9 +101,12 @@ export default {
           this.$message.error(result.data.data.message);
           return;
         }
-        this.$cookie.set("token", JSON.stringify(result.data.data.token), { expires: "30d" });
-        this.$cookie.set("userid", JSON.stringify(result.data.data.userid), { expires: "30d" });
-        console.log(this.$cookie.get("token"));
+        this.$cookie.set("token", JSON.stringify(result.data.data.token), {
+          expires: "30d",
+        });
+        this.$cookie.set("userid", JSON.stringify(result.data.data.userid), {
+          expires: "30d",
+        });
         this.$router.push({
           name: "DashBoard",
         });

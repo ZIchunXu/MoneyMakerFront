@@ -35,6 +35,7 @@
         class="div5"
         type="warning"
         @click="submitForm('portfolioForm')"
+        round
       >Convert</el-button>
       <div class="div6"></div>
       <div class="div7"></div>
@@ -59,14 +60,20 @@
         </el-select>
       </el-form-item>
     </el-form>
-    <div class="hometext" v-if="!converted">
+    <div
+      class="hometext"
+      v-if="!converted"
+    >
       Store portfolio and see a sum of your money in local currencies
-      <br />
+      <br /><br />
       Create alert to be updated with the currency exchange rate
-      <br />
+      <br /><br />
       See a trend of the forex in the past
     </div>
-    <div class="chart div10" v-if="converted">
+    <div
+      class="chart div10"
+      v-if="converted"
+    >
       <line-chart
         :data="chardata"
         area
@@ -81,10 +88,9 @@ export default {
     return {
       chardata: [
         {
-          title:"Conversion chart",
+          title: "Conversion chart",
           name: "",
-          data: [
-          ],
+          data: [],
         },
       ],
       portfolioForm: {
@@ -119,7 +125,7 @@ export default {
           { type: "number", message: "Must be number" },
         ],
       },
-      converted:false,
+      converted: false,
     };
   },
 
@@ -154,15 +160,19 @@ export default {
           this.portfolioForm.tovalue =
             result.data.data * this.portfolioForm.fromvalue;
           let chartData = chartresult.data;
-          let chartName = this.portfolioForm.fromcurrency + " to " + this.portfolioForm.tocurrency + " Conversion ";
+          let chartName =
+            this.portfolioForm.fromcurrency +
+            " to " +
+            this.portfolioForm.tocurrency +
+            " Conversion ";
           this.chardata[0].name = chartName;
 
           let chartDisplayData = [];
           for (const key in chartData) {
             chartDisplayData.push({
               label: key,
-              value: chartData[key]
-            })
+              value: chartData[key],
+            });
           }
           this.chardata[0].data = chartDisplayData;
           this.converted = true;
@@ -191,10 +201,10 @@ export default {
 };
 </script>
 <style>
-.HomeContainer{
+.HomeContainer {
   flex-direction: column;
 }
-.div5{
+.div5 {
   margin-bottom: 15px;
 }
 .parent {
@@ -242,11 +252,10 @@ export default {
 .el-form {
   width: 100%;
 }
-.div10{
-margin-top: 100px;
+.div10 {
+  margin-top: 100px;
 }
 .chart {
-  
   width: 90%;
   height: 400px;
   margin-left: 4%;

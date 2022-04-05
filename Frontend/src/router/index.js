@@ -10,13 +10,12 @@ import Alert from "@/components/dashboard/Alert/Index"
 import createPortfolio from "@/components/dashboard/Portfolio/Create"
 import editPortfolio from "@/components/dashboard/Portfolio/Edit"
 import Portfolio from "@/components/dashboard/Portfolio/Index"
-import NotFound from "@/components/dashboard/NotFound";
+import Welcome from "@/components/dashboard/Welcome";
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
-
     {
       path: '/Login',
       name: 'Login',
@@ -71,8 +70,8 @@ export default new Router({
         },
         {
           path: '/:catchAll(.*)',
-          name: 'NotFound',
-          component: NotFound,
+          name: 'Welcome',
+          component: Welcome,
         },
       ]
     }
