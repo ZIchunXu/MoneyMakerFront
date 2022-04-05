@@ -20,10 +20,8 @@
             label="Portfolio Entry Currency:"
             prop="currency"
           >
-            <el-select
-              v-model="portfolioForm.currency"
-            >
-            <el-option
+            <el-select v-model="portfolioForm.currency">
+              <el-option
                 v-for="item in currencies"
                 :key="item.currencySym"
                 :label="item.currencyFullName"
@@ -59,7 +57,7 @@ export default {
         currency: "",
         EntryValue: "",
       },
-      
+
       currencies: [],
       rules: {
         currency: [
@@ -121,6 +119,9 @@ export default {
   margin-top: 100px;
   margin-left: 10%;
   width: 600px;
+}
+.el-select {
+  width: 100%;
 }
 #titleContainer > h2 {
   font-size: 30pt;

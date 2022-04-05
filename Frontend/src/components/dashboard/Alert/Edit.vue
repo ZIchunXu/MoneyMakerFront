@@ -26,13 +26,19 @@
             label="From:"
             prop="fromCurrency"
           >
-            <el-input v-model="alertForm.fromCurrency" disabled></el-input>
+            <el-input
+              v-model="alertForm.fromCurrency"
+              disabled
+            ></el-input>
           </el-form-item>
           <el-form-item
-             label="To:"
+            label="To:"
             prop="toCurrency"
           >
-            <el-input v-model="alertForm.toCurrency" disabled></el-input>
+            <el-input
+              v-model="alertForm.toCurrency"
+              disabled
+            ></el-input>
           </el-form-item>
           <el-form-item
             label=""
@@ -61,7 +67,10 @@
             ></el-input>
           </el-form-item>
         </el-form>
-        <el-button type="danger" @click=" back()">Back to List</el-button>
+        <el-button
+          type="danger"
+          @click=" back()"
+        >Back to List</el-button>
         <el-button
           type="warning"
           @click="submitForm('alertForm')"
@@ -133,7 +142,7 @@ export default {
         this.alertForm.AlertName = result.data.data.alert.alertName;
         this.alertForm.isBelow = result.data.data.alert.isBelow;
         this.alertForm.ConditionValue = result.data.data.alert.conditionValue;
-        
+
         if (result.data.code != 200) {
           this.$message.error(result.data.message);
           return;
@@ -149,8 +158,8 @@ export default {
     },
     async back() {
       this.$router.push({
-            name: "Alert",
-          });
+        name: "Alert",
+      });
     },
     async submitForm(formName) {
       this.$refs[formName].validate(async (valid) => {
@@ -208,6 +217,9 @@ export default {
   margin-top: 100px;
   margin-left: 10%;
   width: 600px;
+}
+.el-select {
+  width: 100%;
 }
 #titleContainer > h2 {
   font-size: 30pt;

@@ -83,6 +83,9 @@ export default {
       this.token = null;
       this.$cookie.delete("token");
       this.$cookie.delete("userid");
+      this.$router.push({
+        name: "DashBoard",
+      });
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);

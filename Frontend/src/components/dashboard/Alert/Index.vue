@@ -98,6 +98,7 @@ export default {
           return;
         }
         this.alert = result.data.data.alert;
+        console.log(result.data.data.alert)
       } catch (error) {
         this.$message.error(error);
         console.log(error);

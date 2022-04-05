@@ -221,6 +221,9 @@ export default {
   margin-left: 10%;
   width: 600px;
 }
+.el-select{
+  width: 100%;
+}
 #titleContainer > h2 {
   font-size: 30pt;
   font-weight: bold;
