@@ -55,7 +55,7 @@
       ><template slot-scope="scope">
           <router-link :to="{
                 name: 'editAlert',
-                params: {
+                query: {
                   fromCurrency: scope.row.fromCurrency,
                   toCurrency: scope.row.toCurrency,
         },
@@ -98,8 +98,6 @@ export default {
           return;
         }
         this.alert = result.data.data.alert;
-        console.log(result.data.data.alert);
-        console.log(this.alert);
       } catch (error) {
         this.$message.error(error);
         console.log(error);
@@ -107,8 +105,6 @@ export default {
     },
   },
   mounted() {
-    this.token = JSON.parse(this.$cookie.get("token"));
-    console.log(this.token);
     this.getAlert();
   },
 };
