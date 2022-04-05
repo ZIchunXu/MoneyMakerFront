@@ -12,7 +12,6 @@
       <el-card>
         <el-form
           :model="alertForm"
-          :label-position="labelPosition"
           label-width="200px"
           :rules="rules"
           ref="alertForm"

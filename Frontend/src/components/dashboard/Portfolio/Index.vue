@@ -14,7 +14,6 @@
     <!-- Portfolio Table -->
     <el-table
       :data="alert"
-      :row-class-name="tableRowClassName"
       border
     >
 

@@ -12,7 +12,6 @@
       <el-card>
         <el-form
           :model="portfolioForm"
-          :label-position="labelPosition"
           label-width="200px"
           :rules="rules"
           ref="portfolioForm"

@@ -2,7 +2,6 @@
   <el-container>
     <el-header>
       <nav
-        :default-active="activeIndex"
         @select="handleSelect"
       >
         <img
@@ -57,7 +56,7 @@ export default {
   methods: {
     async toHome() {
       this.$router.push({
-        name: "Home",
+        name: "DashBoard",
       });
     },
     async toAlert() {
@@ -82,13 +81,8 @@ export default {
     },
     async logout() {
       this.token = null;
-      this.$router.push({
-        name: "DashBoard",
-      });
       this.$cookie.delete("token");
       this.$cookie.delete("userid");
-      console.log("cleared token & userid");
-      console.log(JSON.parse(this.$cookie.get("userid")));
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
