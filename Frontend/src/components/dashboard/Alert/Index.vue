@@ -62,7 +62,10 @@
               }">
             <el-button type="warning">Edit</el-button>
           </router-link>
-          <el-button type="warning">Delete</el-button>
+          <el-button
+            type="warning"
+            @click="deleteAlert(scope.$index, scope.row)"
+          >Delete</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -71,16 +74,12 @@
 
 <script>
 export default {
-  //=========================================// SAMPLE DATA //=======================================================//
   data() {
     return {
       alert: [],
-
-      //b) TEST DATA: Current User Entity
       currentUser: {},
     };
   },
-  //=========================================// END OF SAMPLE DATA //=======================================================//
   methods: {
     async getAlert() {
       try {
@@ -98,7 +97,38 @@ export default {
           return;
         }
         this.alert = result.data.data.alert;
-        console.log(result.data.data.alert)
+        //console.log(result.data.data.alert[0]);
+      } catch (error) {
+        this.$message.error(error);
+        console.log(error);
+      }
+    },
+    async deleteAlert( index, row) {
+      try {
+        let cookie = this.$cookie.get("token");
+          let userid = this.$cookie.get("userid");
+          let token = JSON.parse(cookie);
+
+          let result = await this.$axios({
+            method: "DELETE",
+            url:
+              "https://money-maker.azurewebsites.net/api/alert?Token=" + token,
+            headers: {},
+            data: {
+              userid: userid,
+              fromCurrency: row.fromCurrency,
+              toCurrency: row.toCurrency,
+              alertName: row.alertName,
+              isBelow: row.isBelow,
+              conditionValue: row.ConditionValue,
+            },
+          });
+          this.alert.splice(index, 1);
+        console.log(index.alertName);
+        if (result.data.code != 200) {
+          this.$message.error(result.data.message);
+          return;
+        }
       } catch (error) {
         this.$message.error(error);
         console.log(error);
