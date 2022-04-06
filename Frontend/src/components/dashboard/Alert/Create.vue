@@ -164,7 +164,7 @@ export default {
           let result = await this.$axios({
             method: "POST",
             url:
-              "https://money-maker.azurewebsites.net/api/alerts?Token=" + token,
+              "https://money-maker.azurewebsites.net/api/alert?Token=" + token,
             headers: {},
             data: {
               userid: userid,
