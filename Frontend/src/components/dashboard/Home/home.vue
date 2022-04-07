@@ -31,12 +31,13 @@
       </el-form-item>
       <div class="div3"></div>
       <div class="div4"></div>
+      <div 
+        class="div5">
       <el-button
-        class="div5"
         type="warning"
         @click="submitForm('portfolioForm')"
         round
-      >Convert</el-button>
+      >Convert</el-button></div>
       <div class="div6"></div>
       <div class="div7"></div>
       <el-form-item class="div8">
@@ -251,6 +252,9 @@ export default {
 }
 .div9 {
   grid-area: 3 / 3 / 4 / 4;
+}
+.el-button {
+  width:80%;
 }
 .el-select {
   width: 330px;
