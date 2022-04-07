@@ -18,9 +18,9 @@
         >
           <el-form-item
             label="Portfolio Entry Currency:"
-            prop="currency"
+            prop="entryCurrencySym"
           >
-            <el-select v-model="portfolioForm.currency">
+            <el-select v-model="portfolioForm.entryCurrencySym">
               <el-option
                 v-for="item in currencies"
                 :key="item.currencySym"
@@ -31,9 +31,9 @@
           </el-form-item>
           <el-form-item
             label="Portfolio Entry Value:"
-            prop="EntryValue"
+            prop="entryValue"
           >
-            <el-input v-model.number="portfolioForm.EntryValue"></el-input>
+            <el-input v-model.number="portfolioForm.entryValue"></el-input>
           </el-form-item>
         </el-form>
         <router-link to="/Portfolio">
@@ -54,20 +54,18 @@ export default {
   data() {
     return {
       portfolioForm: {
-        currency: "",
-        EntryValue: "",
       },
 
       currencies: [],
       rules: {
-        currency: [
+        entryCurrencySym: [
           {
             required: true,
             message: "Please Select Currency",
             trigger: "change",
           },
         ],
-        EntryValue: [
+        entryValue: [
           {
             required: true,
             message: "Please Enter Value",
@@ -80,10 +78,33 @@ export default {
   },
 
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+        async submitForm(formName) {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          alert("submit!");
+          let cookie = this.$cookie.get("token");
+          let userid = this.$cookie.get("userid");
+          let token = JSON.parse(cookie);
+
+          let result = await this.$axios({
+            method: "POST",
+            url:
+              "https://money-maker.azurewebsites.net/api/portfolio?Token=" + token,
+            headers: {},
+            data: {
+              userid: userid,
+              entryCurrencySym: this.portfolioForm.entryCurrencySym,
+              entryValue: this.portfolioForm.entryValue,
+            },
+          });
+
+          console.log(result);
+          this.$router.push({
+            name: "Portfolio",
+          });
+          if (result.data.code != 200) {
+            this.$message.error(result.data.data.message);
+            return;
+          }
         } else {
           console.log("error submit!!");
           return false;

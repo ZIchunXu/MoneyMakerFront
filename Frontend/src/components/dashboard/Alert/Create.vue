@@ -171,7 +171,7 @@ export default {
               fromCurrency: this.alertForm.fromcurrency,
               toCurrency: this.alertForm.tocurrency,
               alertName: this.alertForm.AlertName,
-              isBelow: this.alertForm.formName,
+              isBelow: this.alertForm.isBelow,
               conditionValue: this.alertForm.ConditionValue,
             },
           });
