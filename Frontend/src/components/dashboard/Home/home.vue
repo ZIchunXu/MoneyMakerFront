@@ -253,8 +253,8 @@ export default {
 .div9 {
   grid-area: 3 / 3 / 4 / 4;
 }
-.el-button {
-  width:80%;
+.parent > .div5 > .el-button {
+  width:100%;
 }
 .el-select {
   width: 330px;
