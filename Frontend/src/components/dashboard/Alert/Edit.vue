@@ -2,7 +2,7 @@
   <el-container>
     <el-header>
       <div id="titleContainer">
-        <h2>Edit</h2>
+        <h2>Edit {{this.alertForm.fromCurrency}} to {{this.alertForm.toCurrency}}</h2>
         <br />
         <h3>Alert</h3>
         <br />

@@ -3,10 +3,10 @@
 
     <!-- Title -->
     <div id="titleContainer">
-      <h2><b>Portfolio</b></h2>
+      <h2><b>My Portfolio Entries</b></h2>
       <el-row>
         <router-link to="/createPortfolio">
-          <el-button type="warning">Create New</el-button>
+          <el-button type="warning">Create Portfolio Entry</el-button>
         </router-link>
       </el-row>
     </div>

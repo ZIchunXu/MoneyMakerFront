@@ -2,9 +2,9 @@
   <el-container>
     <el-header>
       <div id="titleContainer">
-        <h2>Make new Portfolio entries</h2>
+        <h2>Change {{this.portfolioForm.entryCurrencySym}}</h2>
         <br />
-        <h3>Entry to your portfolio</h3>
+        <h3>Portfolio entry</h3>
         <br />
       </div>
     </el-header>
@@ -18,22 +18,19 @@
         >
           <el-form-item
             label="Portfolio Entry Currency:"
-            prop="currencies"
+            prop="entryCurrencySym"
           >
-            <el-select v-model="portfolioForm.currency">
-              <el-option
-                v-for="item in currencies"
-                :key="item.currencySym"
-                :label="item.currencyFullName"
-                :value="item.currencySym"
-              ></el-option>
-            </el-select>
+            <el-input
+              v-model="portfolioForm.entryCurrencySym"
+              disabled
+            >
+            </el-input>
           </el-form-item>
           <el-form-item
             label="Portfolio Entry Value:"
-            prop="EntryValue"
+            prop="entryValue"
           >
-            <el-input v-model.number="portfolioForm.EntryValue"></el-input>
+            <el-input v-model.number="portfolioForm.entryValue"></el-input>
           </el-form-item>
         </el-form>
         <router-link to="/Portfolio">
@@ -54,19 +51,11 @@ export default {
   data() {
     return {
       portfolioForm: {
-        currency: "",
-        EntryValue: "",
+        entryCurrencySym:"",
+        entryValue:"",
       },
-      currencies: [],
       rules: {
-        currency: [
-          {
-            required: true,
-            message: "Please Select Currency",
-            trigger: "change",
-          },
-        ],
-        EntryValue: [
+        entryValue: [
           {
             required: true,
             message: "Please Enter Value",
@@ -79,30 +68,78 @@ export default {
   },
 
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+    async getPortfolio() {
+      try {
+        let cookie = this.$cookie.get("token");
+        let token = JSON.parse(cookie);
+        let result = await this.$axios({
+          method: "GET",
+          url:
+            "https://money-maker.azurewebsites.net/api/portfolio?Token=" +
+            token +
+            "&CurrencySym=" +
+            this.portfolioForm.entryCurrencySym,
+          headers: {},
+          data: {},
+        });
+        
+        this.portfolioForm.entryCurrencySym = result.data.data.portfolio.entryCurrencySym;
+        this.portfolioForm.entryValue = result.data.data.portfolio.entryValue;
+
+        if (result.data.code != 200) {
+          this.$message.error(result.data.message);
+          return;
+        }
+      } catch (error) {
+        this.$message.error(error);
+        console.log(error);
+      }
+    },
+    async getParams() {
+      this.portfolioForm.entryCurrencySym = this.$route.query.entryCurrencySym;
+    },
+    async back() {
+      this.$router.push({
+        name: "Portfolio",
+      });
+    },
+    async submitForm(formName) {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          alert("submit!");
+          let cookie = this.$cookie.get("token");
+          let userid = this.$cookie.get("userid");
+          let token = JSON.parse(cookie);
+
+          let result = await this.$axios({
+            method: "PUT",
+            url:
+              "https://money-maker.azurewebsites.net/api/portfolio?Token=" + token,
+            headers: {},
+            data: {
+              userid: userid,
+              entryCurrencySym: this.portfolioForm.entryCurrencySym,
+              entryValue: this.portfolioForm.entryValue,
+            },
+          });
+
+          console.log(result);
+          this.$router.push({
+            name: "Portfolio",
+          });
+          if (result.data.code != 200) {
+            this.$message.error(result.data.data.message);
+            return;
+          }
         } else {
           console.log("error submit!!");
           return false;
         }
       });
     },
-    async getCurrencies() {
-      let result = await this.$axios({
-        method: "GET",
-        url: "https://money-maker.azurewebsites.net/api/currencies",
-        headers: {},
-        data: {},
-      });
-      this.currencies = result.data;
-      console.log(result.data);
-    },
   },
-
   mounted() {
-    this.getCurrencies();
+    this.getParams();
+    this.getPortfolio();
   },
 };
 </script>

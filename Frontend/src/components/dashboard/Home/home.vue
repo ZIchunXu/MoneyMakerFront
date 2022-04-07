@@ -77,6 +77,7 @@
       <line-chart
         :data="chardata"
         area
+        zoom
       />
     </div>
   </el-container>

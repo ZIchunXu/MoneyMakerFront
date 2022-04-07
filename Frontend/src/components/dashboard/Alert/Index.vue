@@ -3,10 +3,10 @@
 
     <!-- Title -->
     <div id="titleContainer">
-      <h2><b>Alert</b></h2>
+      <h2><b>My Alerts</b></h2>
       <el-row>
         <router-link to="/createAlert">
-          <el-button type="warning">Create New</el-button>
+          <el-button type="warning">Create Alert</el-button>
         </router-link>
       </el-row>
     </div>

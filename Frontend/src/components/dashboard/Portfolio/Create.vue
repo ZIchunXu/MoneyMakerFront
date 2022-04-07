@@ -2,7 +2,7 @@
   <el-container>
     <el-header>
       <div id="titleContainer">
-        <h2>Make new Portfolio entries</h2>
+        <h2>Make new Portfolio entry</h2>
         <br />
         <h3>Entry to your portfolio</h3>
         <br />
