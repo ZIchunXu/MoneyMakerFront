@@ -74,7 +74,7 @@
       See a trend of the forex in the past
     </div>
     <div
-      class="chart div10"
+      class="chart"
       v-if="converted"
     >
       <line-chart
@@ -208,9 +208,6 @@ export default {
 .HomeContainer {
   flex-direction: column;
 }
-.div5 {
-  margin-bottom: 15px;
-}
 .parent {
   margin-top: 3%;
   display: grid;
@@ -219,6 +216,7 @@ export default {
   grid-template-rows: repeat(3, 1fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px;
+  width: 100%;
 }
 .hometext {
   margin-top: 3%;
@@ -240,6 +238,7 @@ export default {
 }
 .div5 {
   grid-area: 2 / 2 / 3 / 3;
+  margin-bottom: 15px;
 }
 .div6 {
   grid-area: 2 / 3 / 3 / 4;
@@ -253,12 +252,6 @@ export default {
 .div9 {
   grid-area: 3 / 3 / 4 / 4;
 }
-.el-form {
-  width: 100%;
-}
-.div10 {
-  margin-top: 100px;
-}
 .el-select {
   width: 330px;
 }
@@ -266,6 +259,7 @@ export default {
   width: 90%;
   height: 400px;
   margin-left: 4%;
+  margin-top: 100px;
   background-color: aliceblue;
 }
 </style>
