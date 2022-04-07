@@ -33,7 +33,7 @@
 
           <el-button
             type="danger"
-            style="width: 48%;  margin-bottom: 3%"
+            style="width: 48%;  margin-bottom: 3%" @click="back()"
           >Back to Home</el-button>
           <el-button
             type="warning"
@@ -113,6 +113,12 @@ export default {
     };
   },
   methods: {
+    async back() {
+      console.log(this.$cookie.get("token"));
+      this.$router.push({
+        name: "DashBoard",
+      });
+    },
     async register() {
       try {
         let result = await this.$axios({
@@ -139,7 +145,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert("submit!");
+          this.register();
         } else {
           console.log("error submit!!");
           return false;

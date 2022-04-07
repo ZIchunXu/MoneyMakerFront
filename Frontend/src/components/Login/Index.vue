@@ -81,8 +81,6 @@ export default {
   },
   methods: {
     async back() {
-      this.$cookie.delete("token");
-      this.$cookie.delete("userid");
       console.log(this.$cookie.get("token"));
       this.$router.push({
         name: "DashBoard",
