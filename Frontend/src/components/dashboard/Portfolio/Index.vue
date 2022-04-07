@@ -174,7 +174,9 @@ export default {
   margin-left: 10%;
   height: 73px;
 }
-
+h1 {
+  color:black;
+}
 .box-card {
   width: 80%;
   margin-top: 20px;
