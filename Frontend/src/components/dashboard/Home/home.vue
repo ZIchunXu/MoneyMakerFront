@@ -40,7 +40,10 @@
       <div class="div6"></div>
       <div class="div7"></div>
       <el-form-item class="div8">
-        <el-input v-model="portfolioForm.tovalue" disabled></el-input>
+        <el-input
+          v-model="portfolioForm.tovalue"
+          disabled
+        ></el-input>
       </el-form-item>
       <el-form-item
         class="div9"
@@ -255,6 +258,9 @@ export default {
 }
 .div10 {
   margin-top: 100px;
+}
+.el-select {
+  width: 330px;
 }
 .chart {
   width: 90%;
