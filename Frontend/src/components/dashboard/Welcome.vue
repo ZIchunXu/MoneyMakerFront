@@ -21,7 +21,7 @@ export default {
 };
 </script>
 <style scope>
-h1{
+.el-main > h1{
   color: #fff;
   margin-top:-.5rem ;
   font-size: 40pt;
