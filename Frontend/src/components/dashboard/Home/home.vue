@@ -1,5 +1,5 @@
 <template>
-  <el-container class="HomeContainer">
+  <div class="HomeContainer">
     <el-form
       class="parent"
       :model="portfolioForm"
@@ -83,7 +83,7 @@
         zoom
       />
     </div>
-  </el-container>
+  </div>
 </template>
 <script>
 export default {
