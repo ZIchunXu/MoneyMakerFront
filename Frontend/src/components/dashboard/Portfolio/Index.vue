@@ -14,7 +14,7 @@
     <!-- Portfolio Table -->
     <el-table
       :data="portfolio"
-      border
+      max-height="400"
     >
 
       <!-- Portfolio Column -->
@@ -47,6 +47,12 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-card
+      class="box-card"
+      shadow="always"
+    >
+      <h1>Total CAD: {{sum}}</h1>
+    </el-card>
   </div>
 </template>
 
@@ -55,6 +61,7 @@ export default {
   data() {
     return {
       portfolio: [],
+      sum:"",
     };
   },
   methods: {
@@ -76,6 +83,29 @@ export default {
         }
         console.log(result.data.data.portfolio);
         this.portfolio = result.data.data.portfolio;
+      } catch (error) {
+        this.$message.error(error);
+        console.log(error);
+      }
+    },
+    async getSum() {
+      try {
+        let cookie = this.$cookie.get("token");
+        let token = JSON.parse(cookie);
+        let result = await this.$axios({
+          method: "GET",
+          url:
+            "https://money-maker.azurewebsites.net/api/portfolio/sum?Token=" +
+            token,
+          headers: {},
+          data: {},
+        });
+        if (result.data.code != 200) {
+          this.$message.error(result.data.message);
+          return;
+        }
+        console.log(result.data.data.sum);
+        this.sum = result.data.data.sum;
       } catch (error) {
         this.$message.error(error);
         console.log(error);
@@ -112,6 +142,7 @@ export default {
   },
   mounted() {
     this.getPortfolio();
+    this.getSum();
   },
 };
 </script>
@@ -120,7 +151,6 @@ export default {
 .el-table {
   width: 80%;
   margin-top: 50px;
-  margin-right: 10%;
   margin-left: 10%;
 }
 .el-col {
@@ -136,10 +166,17 @@ export default {
 #titleContainer > h2 {
   font-size: 30pt;
   font-weight: bold;
+  color: aliceblue;
   margin-left: 10%;
 }
 #titleContainer > .el-row {
   margin-left: 10%;
   height: 73px;
+}
+
+.box-card {
+  width: 80%;
+  margin-top: 20px;
+  margin-left: 10%;
 }
 </style>
