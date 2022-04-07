@@ -15,6 +15,7 @@
     <el-table
       :data="portfolio"
       max-height="400"
+      border
     >
 
       <!-- Portfolio Column -->

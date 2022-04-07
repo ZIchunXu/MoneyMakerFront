@@ -162,11 +162,13 @@ export default {
 #titleContainer > h2 {
   font-size: 30pt;
   font-weight: bold;
+  color: aliceblue;
   margin-left: 10%;
 }
 #titleContainer > h3 {
   font-size: 20pt;
   font-weight: bold;
+  color: aliceblue;
   margin-left: 10%;
   margin-top: -30px;
 }

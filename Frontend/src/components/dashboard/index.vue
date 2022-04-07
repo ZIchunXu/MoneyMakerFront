@@ -101,13 +101,11 @@ export default {
 <style scoped>
 /* Nav Bar CSS */
 #logo {
-  width: 200px;
-  float: left;
+  width: 250px;
   margin-top: 12px;
-  margin-left: 10px;
+  position: fixed;
+  margin-left: -7rem;
   display: inline-block;
-  position: relative;
-  z-index: 1;
 }
 nav {
   position: relative;
@@ -130,7 +128,7 @@ nav a {
   text-decoration: none;
   text-transform: uppercase;
   text-align: center;
-  color: #103a31;
+  color: #00c197;
   cursor: pointer;
 }
 nav .animation {
@@ -164,20 +162,20 @@ nav .animation {
 
 #nav1:hover ~ .animation {
   width: 110px;
-  left: 215px;
-  background-color: #5bdfce;
+  left: 0rem;
+  background-color: #d4f4e7;
 }
 
 #nav2:hover ~ .animation {
   width: 120px;
-  left: 325px;
-  background-color: #49bdc4;
+  left: 7.4rem;
+  background-color: #a6f1d3;
 }
 
 #nav3:hover ~ .animation {
   width: 140px;
-  left: 455px;
-  background-color: #15abb3;
+  left:15.5rem;
+  background-color: #51f7b5;
 }
 
 #nav4:hover ~ .animation {

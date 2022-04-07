@@ -40,7 +40,7 @@
       <div class="div6"></div>
       <div class="div7"></div>
       <el-form-item class="div8">
-        <el-input v-model="portfolioForm.tovalue"></el-input>
+        <el-input v-model="portfolioForm.tovalue" disabled></el-input>
       </el-form-item>
       <el-form-item
         class="div9"

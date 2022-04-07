@@ -158,6 +158,7 @@ export default {
 #titleContainer > h2 {
   font-size: 30pt;
   font-weight: bold;
+  color: aliceblue;
   margin-left: 10%;
 }
 #titleContainer > .el-row {
