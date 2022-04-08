@@ -215,24 +215,29 @@ export default {
         for (var i = 0; i < l; i++) {
           this.activealert.push(result.data.data.alerts[i]);
           let isbelow = "";
-          if(this.activealert[i].isBelow === true){
-            isbelow ="below ";
+          if (this.activealert[i].isBelow === true) {
+            isbelow = "below ";
           } else {
-            isbelow ="above ";
+            isbelow = "above ";
           }
           notifyalert +=
             this.activealert[i].fromCurrency +
             " to " +
-            this.activealert[i].toCurrency + 
-            " now is " + isbelow + this.activealert[i].conditionValue + '<br>';
+            this.activealert[i].toCurrency +
+            " now is " +
+            isbelow +
+            this.activealert[i].conditionValue +
+            "<br>";
         }
         console.log(this.activealert);
-        this.$notify.info({
-          title: "Alerts",
-          offset: 80,
-          dangerouslyUseHTMLString: true,
-          message: notifyalert,
-        });
+        if (l != 0) {
+          this.$notify.info({
+            title: "Alerts",
+            offset: 80,
+            dangerouslyUseHTMLString: true,
+            message: notifyalert,
+          });
+        }
       } catch (error) {
         this.$message.error(error);
       }
