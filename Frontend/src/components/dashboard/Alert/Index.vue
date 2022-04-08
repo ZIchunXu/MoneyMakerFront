@@ -15,6 +15,7 @@
     <el-table
       :data="alert"
       border
+      max-height="400"
     >
 
       <!-- AlertName Column -->
@@ -69,6 +70,12 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-card
+      class="box-card"
+      shadow="always"
+    >
+      <h1 v-html="notifyalert"></h1>
+    </el-card>
   </div>
 </template>
 
@@ -77,6 +84,8 @@ export default {
   data() {
     return {
       alert: [],
+      notifyalert:"",
+      activealert: [],
     };
   },
   methods: {
@@ -131,10 +140,46 @@ export default {
         console.log(error);
       }
     },
+
+    async getActiveAlerts() {
+      try {
+        let cookie = this.$cookie.get("token");
+        let token = JSON.parse(cookie);
+        let result = await this.$axios({
+          method: "GET",
+          url:
+            "https://money-maker.azurewebsites.net/api/alert/active?Token=" +
+            token,
+          headers: {},
+          data: {},
+        });
+        if (result.data.code != 200) {
+          this.$message.error(result.data.message);
+          return;
+        }
+        let l = result.data.data.alerts.length;
+        for (var i = 0; i < l; i++) {
+          this.activealert.push(result.data.data.alerts[i]);
+          let isbelow = "";
+          if(this.activealert[i].isBelow === true){
+            isbelow ="below ";
+          } else {
+            isbelow ="above ";
+          }
+          this.notifyalert +=
+            this.activealert[i].fromCurrency +
+            " to " +
+            this.activealert[i].toCurrency + 
+            " now is " + isbelow + this.activealert[i].conditionValue + '<br>';
+        }
+      } catch (error) {
+        this.$message.error(error);
+      }
+    },
   },
   mounted() {
     this.getAlert(); 
-    console.log("1234567rrrr8");
+    this.getActiveAlerts();
   },
 };
 </script>
@@ -164,5 +209,13 @@ export default {
 #titleContainer > .el-row {
   margin-left: 10%;
   height: 73px;
+}
+h1 {
+  color:black;
+}
+.box-card {
+  width: 80%;
+  margin-top: 20px;
+  margin-left: 10%;
 }
 </style>
