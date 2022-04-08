@@ -30,7 +30,7 @@
             label="Portfolio Entry Value:"
             prop="entryValue"
           >
-            <el-input v-model.number="portfolioForm.entryValue"></el-input>
+            <el-input type="number" v-model="portfolioForm.entryValue"></el-input>
           </el-form-item>
         </el-form>
         <router-link to="/Portfolio">
@@ -61,7 +61,6 @@ export default {
             message: "Please Enter Value",
             trigger: "blur",
           },
-          { type: "number", message: "Must be number" },
         ],
       },
     };

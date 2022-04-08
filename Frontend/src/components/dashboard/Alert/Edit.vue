@@ -61,8 +61,8 @@
             label="$"
             prop="ConditionValue"
           >
-            <el-input
-              v-model.number="alertForm.ConditionValue"
+            <el-input type="number"
+              v-model="alertForm.ConditionValue"
               placeholder=""
             ></el-input>
           </el-form-item>
@@ -116,7 +116,6 @@ export default {
             message: "Please Enter Value",
             trigger: "blur",
           },
-          { type: "number", message: "Must be number" },
         ],
       },
     };
