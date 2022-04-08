@@ -27,17 +27,20 @@
         class="div2"
         prop="fromvalue"
       >
-        <el-input v-model.number="portfolioForm.fromvalue"></el-input>
+        <el-input
+          type="number"
+          v-model="portfolioForm.fromvalue"
+        ></el-input>
       </el-form-item>
       <div class="div3"></div>
       <div class="div4"></div>
-      <div 
-        class="div5">
-      <el-button
-        type="warning"
-        @click="submitForm('portfolioForm')"
-        round
-      >Convert</el-button></div>
+      <div class="div5">
+        <el-button
+          type="warning"
+          @click="submitForm('portfolioForm')"
+          round
+        >Convert</el-button>
+      </div>
       <div class="div6"></div>
       <div class="div7"></div>
       <el-form-item class="div8">
@@ -114,22 +117,15 @@ export default {
             trigger: "change",
           },
         ],
-        tocurrency: [
-          {
-            required: true,
-            message: "Please Select Currency",
-            trigger: "change",
-          },
-        ],
         fromvalue: [
           {
             required: false,
             message: "Please Enter Value",
             trigger: "blur",
           },
-          { type: "number", message: "Must be number" },
         ],
       },
+      activealert: [],
       converted: false,
     };
   },
@@ -198,10 +194,56 @@ export default {
       this.fromcurrencies = result.data;
       this.tocurrencies = result.data;
     },
+    async getActiveAlerts() {
+      try {
+        let cookie = this.$cookie.get("token");
+        let token = JSON.parse(cookie);
+        let result = await this.$axios({
+          method: "GET",
+          url:
+            "https://money-maker.azurewebsites.net/api/alert/active?Token=" +
+            token,
+          headers: {},
+          data: {},
+        });
+        if (result.data.code != 200) {
+          this.$message.error(result.data.message);
+          return;
+        }
+        let l = result.data.data.alerts.length;
+        let notifyalert = "";
+        for (var i = 0; i < l; i++) {
+          this.activealert.push(result.data.data.alerts[i]);
+          let isbelow = "";
+          if(this.activealert[i].isBelow === true){
+            isbelow ="below ";
+          } else {
+            isbelow ="above ";
+          }
+          notifyalert +=
+            this.activealert[i].fromCurrency +
+            " to " +
+            this.activealert[i].toCurrency + 
+            " now is " + isbelow + this.activealert[i].conditionValue + '<br>';
+        }
+        console.log(this.activealert);
+        this.$notify.info({
+          title: "Alerts",
+          offset: 80,
+          dangerouslyUseHTMLString: true,
+          message: notifyalert,
+        });
+      } catch (error) {
+        this.$message.error(error);
+      }
+    },
   },
 
   mounted() {
     this.getCurrencies();
+    if (this.$cookie.get("token") != null) {
+      this.getActiveAlerts();
+    }
   },
 };
 </script>
@@ -254,7 +296,7 @@ export default {
   grid-area: 3 / 3 / 4 / 4;
 }
 .parent > .div5 > .el-button {
-  width:100%;
+  width: 100%;
 }
 .el-select {
   width: 330px;
