@@ -71,7 +71,7 @@
       </el-table-column>
     </el-table>
     <el-card
-      class="box-card"
+      class="active-card"
       shadow="always"
     >
       <h1 v-html="notifyalert"></h1>
@@ -210,12 +210,12 @@ export default {
   margin-left: 10%;
   height: 73px;
 }
-h1 {
-  color:black;
-}
-.box-card {
+.active-card {
   width: 80%;
   margin-top: 20px;
   margin-left: 10%;
+}
+h1 {
+  color:#ff7676;
 }
 </style>
