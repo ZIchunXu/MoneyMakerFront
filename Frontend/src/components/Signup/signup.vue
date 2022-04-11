@@ -22,13 +22,13 @@
             label="Password"
             prop="password"
           >
-            <el-input v-model="userForm.password"></el-input>
+            <el-input type="password" v-model="userForm.password"></el-input>
           </el-form-item>
           <el-form-item
             label="Confirm Password"
             prop="confirm_password"
           >
-            <el-input v-model="userForm.confirm_password"></el-input>
+            <el-input type="password" v-model="userForm.confirm_password"></el-input>
           </el-form-item>
 
           <el-button
